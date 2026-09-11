@@ -16,6 +16,10 @@
             --completed-border: #38b2ac;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
@@ -27,7 +31,7 @@
         }
 
         .container {
-            max-width: 950px;
+            max-width: 1200px;
             width: 100%;
         }
 
@@ -41,23 +45,45 @@
             margin-bottom: 5px;
         }
 
-        .semester-nav {
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
             display: flex;
+            flex-direction: column;
             gap: 10px;
-            justify-content: center;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
+        }
+
+        .semester-group {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
         }
 
         .sem-btn {
-            background-color: #e0e0e0;
+            width: 100%;
+            background-color: #edf2f7;
             border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 12px 15px;
             cursor: pointer;
             font-weight: bold;
-            color: #555;
+            color: var(--primary-color);
             transition: all 0.2s ease;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
         }
 
         .sem-btn.active {
@@ -65,8 +91,80 @@
             color: white;
         }
 
+        .sem-btn .sem-credits {
+            font-size: 0.8rem;
+            background: rgba(0, 0, 0, 0.08);
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+
+        .sem-btn.active .sem-credits {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
         .sem-btn:hover {
             opacity: 0.9;
+        }
+
+        .subject-nav-list {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px;
+            background: #ffffff;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .semester-group.open .subject-nav-list {
+            display: flex;
+        }
+
+        .subject-nav-link {
+            background-color: #f8fafc;
+            color: var(--primary-color);
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .subject-nav-link:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .subject-nav-link .nav-credits {
+            font-size: 0.75rem;
+            color: #718096;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .subject-nav-link:hover .nav-credits {
+            color: #e2e8f0;
+        }
+
+        .subject-nav-link.completed {
+            background-color: var(--completed-bg);
+            color: #234e52;
+            border: 1px solid var(--completed-border);
+            font-weight: bold;
+        }
+
+        .subject-nav-link.completed::after {
+            content: "✅";
+            font-size: 0.85rem;
+        }
+
+        .subject-nav-link.completed:hover {
+            background-color: var(--completed-border);
+            color: white;
         }
 
         .subject-card {
@@ -77,9 +175,9 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             border: 1px solid var(--border-color);
             transition: background-color 0.3s ease, border-color 0.3s ease;
+            scroll-margin-top: 20px;
         }
 
-        /* Zelené podbarvení při splnění všech úkolů předmětu */
         .subject-card.completed {
             background-color: var(--completed-bg);
             border-color: var(--completed-border);
@@ -100,6 +198,12 @@
             font-size: 1.3rem;
         }
 
+        .subject-header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .subject-code {
             background: #edf2f7;
             padding: 3px 8px;
@@ -107,6 +211,16 @@
             font-size: 0.85rem;
             font-weight: bold;
             color: #4a5568;
+        }
+
+        .subject-credits-tag {
+            background: #ebf8ff;
+            color: #2b6cb0;
+            border: 1px solid #bee3f8;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
         }
 
         .info-grid {
@@ -124,27 +238,21 @@
             color: var(--primary-color);
         }
 
-        .description {
-            margin-bottom: 15px;
-            line-height: 1.5;
-            color: #4a5568;
-        }
-
-        .materials {
+        .description, .materials {
             margin-bottom: 15px;
             line-height: 1.5;
             color: #4a5568;
         }
 
         a {
-    color: var(--accent-color);
-    text-decoration: none;
-    font-weight: 500;
-}
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
 
-a:hover {
-    text-decoration: underline;
-}
+        a:hover {
+            text-decoration: underline;
+        }
 
         .section-title {
             font-weight: bold;
@@ -161,27 +269,59 @@ a:hover {
         }
 
         li {
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
+            margin-bottom: 8px;
         }
 
-        label {
+        .task-label {
             cursor: pointer;
             user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .task-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .deadline-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background-color: #fffaf0;
+            color: #dd6b20;
+            border: 1px solid #fbd38d;
+            padding: 2px 8px;
+            border-radius: 12px;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         input[type="checkbox"] {
-            margin-right: 10px;
             width: 16px;
             height: 16px;
             accent-color: var(--accent-color);
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         input[type="checkbox"]:checked + span {
             text-decoration: line-through;
             color: #a0aec0;
+        }
+
+        input[type="checkbox"]:checked ~ .deadline-badge,
+        label:has(input[type="checkbox"]:checked) .deadline-badge {
+            opacity: 0.5;
+            background-color: #edf2f7;
+            color: #718096;
+            border-color: #cbd5e0;
         }
 
         .schedule-grid {
@@ -203,9 +343,25 @@ a:hover {
             display: block;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 850px) {
+            .layout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+                max-height: none;
+            }
+
             .schedule-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .task-label {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
             }
         }
     </style>
@@ -218,360 +374,1571 @@ a:hover {
         <p>Kombinované studium</p>
     </header>
 
-    <!-- Navigace semestrů -->
-    <div class="semester-nav">
-        <button class="sem-btn active" onclick="filterSemester('sem1', event)">1. Semestr</button>
-        <!-- Pro další semestry odkomentujte tlačítka níže: -->
-        <!-- <button class="sem-btn" onclick="filterSemester('sem2', event)">2. Semestr</button> -->
-    </div>
-
-    <!-- SEZNAM PŘEDMĚTŮ -->
-    <div id="subject-container">
-
-        <!-- PŘEDMĚT 1 -->
-        <div class="subject-card sem1">
-            <div class="subject-header">
-                <h2 class="subject-title">Elements of AI</h2>
-                <span class="subject-code">AI001</span>
-            </div>
-            <div class="info-grid">
-                <div class="info-item"><strong>Vyučující:</strong> PhDr. Petr Škyřík, Ph.D., Mgr. Bc. Kateřina Švidrnochová</div>
-                <div class="info-item"><strong>Místnost:</strong> Online - kdykoliv v průběhu semestru</div>
-                <div class="info-item"><strong>Počet kreditů:</strong> 2</div>
-                <div class="info-item"><strong>Ukončení:</strong> Certifikát, reflexivní dotazník, Splnění úkolů</div>
-            </div>
-            <div class="description">
-                <b>📝 Stručný popis předmětu:</b> <a href="https://www.elementsofai.cz/" target="_blank">Online kurz</a>, který si každý plní podle svých možností v rámci semestru.
-            </div>
-            <div class="materials">
-                <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/AI001/" target="_blank">Elements of AI</a>
-            </div>
+    <div class="layout-grid">
+        <aside class="sidebar">
             
-            <div class="section-title">📅 Rozvrh výuky:</div>
-            <ul class="schedule-grid">
-                <li>pátek 25.9.<br><small>1. kapitola</small></li>
-                <li>sobota 26.9.<br><small>2. kapitola</small></li>
-                <li>neděle 27.9.<br><small>3. kapitola</small></li>
-                <li>pondělí 28.9.<br><small>4. kapitola</small></li>
-                <li>sobota 3.10.<br><small>5. kapitola</small></li>
-                <li>neděle 4.10.<br><small>6. kapitola</small></li>
-            </ul>
+            <!-- 1. SEMESTR SKUPINA -->
+            <div id="group-sem1" class="semester-group open">
+                <button class="sem-btn active" onclick="toggleSemester('sem1')">
+                    <span>1. Semestr</span>
+                    <span class="sem-credits">34 kr.</span>
+                </button>
+                <div class="subject-nav-list">
+                    <a href="#predmet-ai001" class="subject-nav-link" data-target="predmet-ai001"><span>Elements of AI</span><span class="nav-credits">2 kr.</span></a>
+                    <a href="#predmet-kpi55" class="subject-nav-link" data-target="predmet-kpi55"><span>DigCompEdu</span><span class="nav-credits">5 kr.</span></a>
+                    <a href="#predmet-iskb60" class="subject-nav-link" data-target="predmet-iskb60"><span>Prolegomena k oboru</span><span class="nav-credits">2 kr.</span></a>
+                    <a href="#predmet-iskb04" class="subject-nav-link" data-target="predmet-iskb04"><span>Psaní odborných textů</span><span class="nav-credits">5 kr.</span></a>
+                    <a href="#predmet-kod05" class="subject-nav-link" data-target="predmet-kod05"><span>Informační služby</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb08" class="subject-nav-link" data-target="predmet-iskb08"><span>Literatura v kultuře</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb02" class="subject-nav-link" data-target="predmet-iskb02"><span>Úvod do knihovnictví</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb65" class="subject-nav-link" data-target="predmet-iskb65"><span>Blok expertů</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-phk0001" class="subject-nav-link" data-target="predmet-phk0001"><span>Filozofie</span><span class="nav-credits">4 kr.</span></a>
+                </div>
+            </div>
 
-            <div class="section-title">✅ Podmínky pro splnění</div>
-            <ul>
-                <li><label><input type="checkbox" id="p1_t1" onchange="saveCheck('p1_t1')"><span>1. kapitola: Co je umělá inteligence?</span></label></li>
-                <li><label><input type="checkbox" id="p1_t2" onchange="saveCheck('p1_t2')"><span>2. kapitola: Řešení problémů pomocí umělé inteligence</span></label></li>
-                <li><label><input type="checkbox" id="p1_t3" onchange="saveCheck('p1_t3')"><span>3. kapitola: Umělá inteligence v reálném světě</span></label></li>
-                <li><label><input type="checkbox" id="p1_t4" onchange="saveCheck('p1_t4')"><span>4. kapitola: Strojové učení</span></label></li>
-                <li><label><input type="checkbox" id="p1_t5" onchange="saveCheck('p1_t5')"><span>5. kapitola: Neuronové sítě</span></label></li>
-                <li><label><input type="checkbox" id="p1_t6" onchange="saveCheck('p1_t6')"><span>6. kapitola: Důsledky</span></label></li>
-                <li><label><input type="checkbox" id="p1_t7" onchange="saveCheck('p1_t7')"><span>Získání a nahrání certifikátu</span></label></li>
-                <li><label><input type="checkbox" id="p1_t8" onchange="saveCheck('p1_t8')"><span>Vyplnění reflektivního dotazníku</span></label></li>
-            </ul>
-        </div>
+            <!-- 2. SEMESTR SKUPINA -->
+            <div id="group-sem2" class="semester-group">
+                <button class="sem-btn" onclick="toggleSemester('sem2')">
+                    <span>2. Semestr</span>
+                    <span class="sem-credits">42 kr.</span>
+                </button>
+                <div class="subject-nav-list">
+                    <a href="#predmet-cjvvstp" class="subject-nav-link" data-target="predmet-cjvvstp"><span>Vstupní test - kombi</span><span class="nav-credits">0 kr.</span></a>
+                    <a href="#predmet-iskb01" class="subject-nav-link" data-target="predmet-iskb01"><span>Informační věda</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb05" class="subject-nav-link" data-target="predmet-iskb05"><span>Informační prameny</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb07" class="subject-nav-link" data-target="predmet-iskb07"><span>Digitální kompetence</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb34" class="subject-nav-link" data-target="predmet-iskb34"><span>Filozofie informace</span><span class="nav-credits">5 kr.</span></a>
+                    <a href="#predmet-iskb82" class="subject-nav-link" data-target="predmet-iskb82"><span>AI v praxi</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb86" class="subject-nav-link" data-target="predmet-iskb86"><span>Digitální stopa</span><span class="nav-credits">3 kr.</span></a>
+                    <a href="#predmet-kpi22" class="subject-nav-link" data-target="predmet-kpi22"><span>Kreativní práce s inf.</span><span class="nav-credits">5 kr.</span></a>
+                    <a href="#predmet-kpi33" class="subject-nav-link" data-target="predmet-kpi33"><span>Kurz rozvoje dig. komp.</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-med02" class="subject-nav-link" data-target="predmet-med02"><span>Úvod do jazykovědy</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-mkm11" class="subject-nav-link" data-target="predmet-mkm11"><span>Metody krit. myšlení</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-fj0011" class="subject-nav-link" data-target="predmet-fj0011"><span>Kurz španělštiny 1</span><span class="nav-credits">4 kr.</span></a>
+                </div>
+            </div>
 
-        <!-- PŘEDMĚT 2 -->
-        <div class="subject-card sem1">
-            <div class="subject-header">
-                <h2 class="subject-title">DigCompEdu: Technologie ve vzdělávání</h2>
-                <span class="subject-code">KPI55</span>
+            <!-- 3. SEMESTR SKUPINA -->
+            <div id="group-sem3" class="semester-group">
+                <button class="sem-btn" onclick="toggleSemester('sem3')">
+                    <span>3. Semestr</span>
+                    <span class="sem-credits">39 kr.</span>
+                </button>
+                <div class="subject-nav-list">
+                    <a href="#predmet-du1730" class="subject-nav-link" data-target="predmet-du1730"><span>Komunikace vědy I</span><span class="nav-credits">5 kr.</span></a>
+                    <a href="#predmet-iskb06" class="subject-nav-link" data-target="predmet-iskb06"><span>Metodologie ISK</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb09" class="subject-nav-link" data-target="predmet-iskb09"><span>Nástroje a možnosti internetu</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb11" class="subject-nav-link" data-target="predmet-iskb11"><span>Přehled české literatury</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb13" class="subject-nav-link" data-target="predmet-iskb13"><span>Právní základ</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb30" class="subject-nav-link" data-target="predmet-iskb30"><span>Informace, kom. a identita</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb48" class="subject-nav-link" data-target="predmet-iskb48"><span>Digitalizace kult. dědictví</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb63" class="subject-nav-link" data-target="predmet-iskb63"><span>Informatické myšlení</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskm103" class="subject-nav-link" data-target="predmet-iskm103"><span>Kyberbezpečnost</span><span class="nav-credits">3 kr.</span></a>
+                    <a href="#predmet-cjva2p" class="subject-nav-link" data-target="predmet-cjva2p"><span>Online AJ pro ak. účely II</span><span class="nav-credits">4 kr.</span></a>
+                </div>
             </div>
-            <div class="info-grid">
-                <div class="info-item"><strong>Vyučující:</strong> doc. RNDr. Michal Černý, Ph.D., Klára Tauchmanová</div>
-                <div class="info-item"><strong>Místnost:</strong> Online</div>
-                <div class="info-item"><strong>Počet kreditů:</strong> 5</div>
-                <div class="info-item"><strong>Ukončení:</strong> Průběžné úkoly a test</div>
-            </div>
-            <div class="description">
-                <b>📝 Stručný popis předmětu:</b> <a href="https://kisk.phil.muni.cz/edutech" target="_blank">Online kurz</a> zaměřený na rozvoj digitálních kompetencí v pedagogice. Vytvářím si vlastní nástroje a dáváme si navzájem zpětnou vazbu. <b>Doplnit si rozvrh podle termínů odevzdání úkolů!</b>
-            </div>
-            <div class="materials">
-                <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/KPI55/" target="_blank">DigCompEdu: Technologie ve vzdělávání</a>
-            </div>
-            <div class="section-title">📅 Rozvrh výuky:</div>
-            <ul class="schedule-grid">
-                <li>01.10. 13:00–16:00<br><small>1. tutoriál</small></li>
-            </ul>
-            <div class="section-title">✅ Podmínky pro splnění</div>
-            <ul>
-                <li><label><input type="checkbox" id="p2_t1" onchange="saveCheck('p2_t1')"><span>Autoevaluace na počátku kurzu</span></label></li>
-                <li><label><input type="checkbox" id="p2_t2" onchange="saveCheck('p2_t2')"><span>Autoevaluace na konci kurzu</span></label></li>
-                <li><label><input type="checkbox" id="p2_t3" onchange="saveCheck('p2_t3')"><span>Profesní zapojení: Stát se členem odborné skupiny - vybrat si oblast zájmu</span></label></li>
-                <li><label><input type="checkbox" id="p2_t4" onchange="saveCheck('p2_t4')"><span>Profesní zapojení: Seznam stránek a zdrojů, popis a důvod, proč je budu sledovat</span></label></li>
-                <li><label><input type="checkbox" id="p2_t5" onchange="saveCheck('p2_t5')"><span>Profesní zapojení: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></label></li>
-                <li><label><input type="checkbox" id="p2_t6" onchange="saveCheck('p2_t6')"><span>Digitální zdroje: Najít otevřený vzdělávací zdroj + adaptace do vlastních podmínek</span></label></li>
-                <li><label><input type="checkbox" id="p2_t7" onchange="saveCheck('p2_t7')"><span>Digitální zdroje: Vytvořit heslo na Wikipedii</span></label></li>
-                <li><label><input type="checkbox" id="p2_t8" onchange="saveCheck('p2_t8')"><span>Digitální zdroje: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></label></li>
-                <li><label><input type="checkbox" id="p2_t9" onchange="saveCheck('p2_t9')"><span>Výuka: Tvorba instruktážního videa (30 s - 5 min)</span></label></li>
-                <li><label><input type="checkbox" id="p2_t10" onchange="saveCheck('p2_t10')"><span>Výuka: Návrh lekce, kterou bych ráda učila</span></label></li>
-                <li><label><input type="checkbox" id="p2_t11" onchange="saveCheck('p2_t11')"><span>Výuka: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></label></li>
-                <li><label><input type="checkbox" id="p2_t12" onchange="saveCheck('p2_t12')"><span>Digitální hodnocení: Jak pracovat s hodnocením a zpětnou vazbou v úkolech z Výuky</span></label></li>
-                <li><label><input type="checkbox" id="p2_t13" onchange="saveCheck('p2_t13')"><span>Digitální hodnocení: Tvorba testové sady s výběrem odpovědí k oboru a zpětnou vazbou</span></label></li>
-                <li><label><input type="checkbox" id="p2_t14" onchange="saveCheck('p2_t14')"><span>Digitální hodnocení: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></label></li>
-                <li><label><input type="checkbox" id="p2_t15" onchange="saveCheck('p2_t15')"><span>Podpora studentů: Titulky k videu z úkolu Výuka</span></label></li>
-                <li><label><input type="checkbox" id="p2_t16" onchange="saveCheck('p2_t16')"><span>Podpora studentů: Využít nástroj na syntézu řeči - popsání zkušenosti</span></label></li>
-                <li><label><input type="checkbox" id="p2_t17" onchange="saveCheck('p2_t17')"><span>Podpora studentů: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></label></li>
-                <li><label><input type="checkbox" id="p2_t18" onchange="saveCheck('p2_t18')"><span>Podpora digitálních kompetencí žáků: Tvorba interaktivního studijního materiálu (interakce na 15 minut)</span></label></li>
-                <li><label><input type="checkbox" id="p2_t19" onchange="saveCheck('p2_t19')"><span>Podpora digitálních kompetencí žáků: 3 věci, které dělám pro svůj digital wellbeing, které bych předala studentům a proč</span></label></li>
-                <li><label><input type="checkbox" id="p2_t20" onchange="saveCheck('p2_t20')"><span>Podpora digitálních kompetencí žáků: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></label></li>
-                <li><label><input type="checkbox" id="p2_t21" onchange="saveCheck('p2_t21')"><span>Všechny udělané zpětné vazby spolužákům</span></label></li>
-                <li><label><input type="checkbox" id="p2_t22" onchange="saveCheck('p2_t22')"><span>Závěrečný úkol </span></label></li>
-                <li><label><input type="checkbox" id="p2_t23" onchange="saveCheck('p2_t23')"><span>Složený test (nad 60 % s možností dvou opakování) na konci semestru (není potřeba, pokud získám 32-36 bodů za úkoly)</span></label></li>
-            </ul>
-        </div>
 
-        <!-- PŘEDMĚT 3 -->
-        <div class="subject-card sem1">
-            <div class="subject-header">
-                <h2 class="subject-title">Prolegomena k oboru</h2>
-                <span class="subject-code">ISKB60</span>
+            <!-- 4. SEMESTR SKUPINA -->
+            <div id="group-sem4" class="semester-group">
+                <button class="sem-btn" onclick="toggleSemester('sem4')">
+                    <span>4. Semestr</span>
+                    <span class="sem-credits">37 kr.</span>
+                </button>
+                <div class="subject-nav-list">
+                    <a href="#predmet-iskb10" class="subject-nav-link" data-target="predmet-iskb10"><span>Vyhledávání informací</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb12" class="subject-nav-link" data-target="predmet-iskb12"><span>Informační systémy</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb14" class="subject-nav-link" data-target="predmet-iskb14"><span>Informační vzdělávání</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskb15" class="subject-nav-link" data-target="predmet-iskb15"><span>Seminář k bak. práci</span><span class="nav-credits">5 kr.</span></a>
+                    <a href="#predmet-iskb16" class="subject-nav-link" data-target="predmet-iskb16"><span>Referenční a inf. služby 1</span><span class="nav-credits">2 kr.</span></a>
+                    <a href="#predmet-iskm38" class="subject-nav-link" data-target="predmet-iskm38"><span>Média v informačním věku</span><span class="nav-credits">4 kr.</span></a>
+                    <a href="#predmet-iskm62" class="subject-nav-link" data-target="predmet-iskm62"><span>Webová analytika</span><span class="nav-credits">5 kr.</span></a>
+                    <a href="#predmet-iskm64" class="subject-nav-link" data-target="predmet-iskm64"><span>Informační společnost</span><span class="nav-credits">5 kr.</span></a>
+                    <a href="#predmet-rlb666" class="subject-nav-link" data-target="predmet-rlb666"><span>Konec světa</span><span class="nav-credits">4 kr.</span></a>
+                </div>
             </div>
-            <div class="info-grid">
-                <div class="info-item"><strong>Vyučující:</strong> Mix</div>
-                <div class="info-item"><strong>Místnost:</strong> Podle vybraných aktivit</div>
-                <div class="info-item"><strong>Počet kreditů:</strong> 2</div>
-                <div class="info-item"><strong>Ukončení:</strong> Absolvované alespoň 3 aktivity, Písemný reflektivní záznam</div>
-            </div>
-            <div class="description">
-                <b>📝 Stručný popis předmětu:</b> Blokový motivační předmět pro seznámení s oborem a spolužáky.
-            </div>
-            <div class="materials">
-                <b>📚 Studijní materiály:</b> <a href="https://shimmering-druid-ffe863.netlify.app/" target="_blank">Harmonogram adapťáku</a>
-            </div>
-            <div class="section-title">📅 Rozvrh výuky:</div>
-            <ul class="schedule-grid">
-                <li>pátek 18. 9., 16:00<br><small>Nové technologie a kde je můžete najít (Knihovna FF)</small></li>
-                <li>pátek 18. 9., 20:00<br><small>KISK 001: Katalog možných budoucností (Knihovna FF)</small></li>
-                <li>sobota 19. 9., 9:00<br><small>Portfolia (B2.24)</small></li>
-                <li>sobota 19. 9., 10:00<br><small>Vibecoding – tvorba knihovních aplikací (B2.33)</small></li>
-                <li>sobota 19. 9., 11:30<br><small>Zorientuj se v knihovně – zážitková hra (Knihovna FF)</small></li>
-            </ul>
-            <div class="section-title">✅ Podmínky pro splnění</div>
-            <ul>
-                <li><label><input type="checkbox" id="p3_t1" onchange="saveCheck('p3_t1')"><span>Absolvované alespoň 3 aktivity</span></label></li>
-                <li><label><input type="checkbox" id="p3_t2" onchange="saveCheck('p3_t2')"><span>Písemný reflektivní záznam</span></label></li>
-            </ul>
-        </div>
 
-        <!-- PŘEDMĚT 4 -->
-        <div class="subject-card sem1">
-            <div class="subject-header">
-                <h2 class="subject-title">Psaní odborných textů</h2>
-                <span class="subject-code">ISKB04</span>
+            <!-- 5. SEMESTR SKUPINA -->
+            <div id="group-sem5" class="semester-group">
+                <button class="sem-btn" onclick="toggleSemester('sem5')">
+                    <span>5. Semestr</span>
+                    <span class="sem-credits">14 kr.</span>
+                </button>
+                <div class="subject-nav-list">
+                    <a href="#predmet-iskb17" class="subject-nav-link" data-target="predmet-iskb17"><span>Referenční a inf. služby 2</span><span class="nav-credits">3 kr.</span></a>
+                    <a href="#predmet-iskb18" class="subject-nav-link" data-target="predmet-iskb18"><span>Příprava bak. práce I</span><span class="nav-credits">7 kr.</span></a>
+                    <a href="#predmet-iskb19" class="subject-nav-link" data-target="predmet-iskb19"><span>Odborná praxe</span><span class="nav-credits">4 kr.</span></a>
+                </div>
             </div>
-            <div class="info-grid">
-                <div class="info-item"><strong>Vyučující:</strong> Mgr. Pavlína Mazáčová, Ph.D.</div>
-                <div class="info-item"><strong>Místnost:</strong> B2.13</div>
-                <div class="info-item"><strong>Počet kreditů:</strong> 5</div>
-                <div class="info-item"><strong>Ukončení:</strong> Docházka (75 %), 2 průběžné úkoly, seminární práce</div>
-            </div>
-            <div class="description">
-                <b>📝 Stručný popis předmětu:</b> Základní kompetence pro práci s odborným textem a se zdroji od vyhledávání po vlastní tvorbu.
-            </div>
-            <div class="materials">
-                <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/ISKB04/" target="_blank">Psaní odborných textů</a>
-            </div>
-            <div class="section-title">📅 Rozvrh výuky:</div>
-            <ul class="schedule-grid">
-                <li>18.9. 8:00–9:30</li>
-                <li>9.10. 8:00–9:30</li>
-                <li>6.11. 8:00–9:30</li>
-                <li>27.11. 8:00–9:30</li>
-                <li>18.12. 8:00–9:30</li>
-            </ul>
-            <div class="section-title">✅ Podmínky pro splnění</div>
-            <ul>
-                <li><label><input type="checkbox" id="p4_t1" onchange="saveCheck('p4_t1')"><span>Průběžný úkol 1</span></label></li>
-                <li><label><input type="checkbox" id="p4_t2" onchange="saveCheck('p4_t2')"><span>Průběžný úkol 2</span></label></li>
-                <li><label><input type="checkbox" id="p4_t3" onchange="saveCheck('p4_t3')"><span>Seminární práce</span></label></li>
-            </ul>
-        </div>
 
-        <!-- PŘEDMĚT 5 -->
-        <div class="subject-card sem1">
-            <div class="subject-header">
-                <h2 class="subject-title">Informační služby a vyhledávání</h2>
-                <span class="subject-code">KÓD05</span>
+            <!-- 6. SEMESTR SKUPINA -->
+            <div id="group-sem6" class="semester-group">
+                <button class="sem-btn" onclick="toggleSemester('sem6')">
+                    <span>6. Semestr</span>
+                    <span class="sem-credits">14 kr.</span>
+                </button>
+                <div class="subject-nav-list">
+                    <a href="#predmet-iskb20" class="subject-nav-link" data-target="predmet-iskb20"><span>Příprava bak. práce II</span><span class="nav-credits">14 kr.</span></a>
+                    <a href="#predmet-iskb21" class="subject-nav-link" data-target="predmet-iskb21"><span>Bakalářská zkouška</span><span class="nav-credits">0 kr.</span></a>
+                </div>
             </div>
-            <div class="info-grid">
-                <div class="info-item"><strong>Vyučující:</strong> PhDr. Petr Škyřík, Ph.D.</div>
-                <div class="info-item"><strong>Místnost:</strong> C11</div>
-                <div class="info-item"><strong>Počet kreditů:</strong> 4</div>
-                <div class="info-item"><strong>Ukončení:</strong> 3 průběžné úkoly, písemný test</div>
-            </div>
-            <div class="description">
-                <b>📝 Stručný popis předmětu:</b> Seznámení s klíčovými teoriemi informačních věd, principy designového přemýšlení a megatrendy, které ovlivňují informační společnost.
-            </div>
-            <div class="materials">
-                <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/ISKB03/" target="_blank">Informační služby a vyhledávání</a></div>
-            <div class="section-title">📅 Rozvrh výuky:</div>
-            <ul class="schedule-grid">
-                <li>18.9. 10:00–11:40</li>
-                <li>9.10. 10:00–11:40</li>
-                <li>6.11. 10:00–11:40</li>
-                <li>27.11. 10:00–11:40</li>
-                <li>18.12. 10:00–11:40</li>
-            </ul>
-            <div class="section-title">✅ Podmínky pro splnění</div>
-            <ul>
-                <li><label><input type="checkbox" id="p5_t1" onchange="saveCheck('p5_t1')"><span>Osobní portfolio</span></label></li>
-                <li><label><input type="checkbox" id="p5_t2" onchange="saveCheck('p5_t2')"><span>AI produkt</span></label></li>
-                <li><label><input type="checkbox" id="p5_t3" onchange="saveCheck('p5_t3')"><span>Prototyp služby</span></label></li>
-                <li><label><input type="checkbox" id="p5_t4" onchange="saveCheck('p5_t4')"><span>Ústní zkouška</span></label></li>
-            </ul>
-        </div>
 
-        <!-- PŘEDMĚT 6 -->
-        <div class="subject-card sem1">
-            <div class="subject-header">
-                <h2 class="subject-title">Literatura v kulturním kontextu</h2>
-                <span class="subject-code">ISKB08</span>
-            </div>
-            <div class="info-grid">
-                <div class="info-item"><strong>Vyučující:</strong> Mgr. BcA. Anna Bloch, Ph.D.</div>
-                <div class="info-item"><strong>Místnost:</strong> B2.13</div>
-                <div class="info-item"><strong>Počet kreditů:</strong> 4</div>
-                <div class="info-item"><strong>Ukončení:</strong> Seminární práce, písemná zkouška</div>
-            </div>
-            <div class="description">
-                <b>📝 Stručný popis předmětu:</b> Spojitost literatury a kultury.
-            </div>
-            <div class="materials">
-                <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/ISKB08/" target="_blank">Literatura v kulturním kontextu</a>
-            </div>
-            <div class="section-title">📅 Rozvrh výuky:</div>
-            <ul class="schedule-grid">
-                <li>18.9. 12:00–13:40</li>
-                <li>9.10. 12:00–13:40</li>
-                <li>6.11. 12:00–13:40</li>
-                <li>27.11. 12:00–13:40</li>
-                <li>18.12. 12:00–13:40</li>
-            </ul>
-            <div class="section-title">✅ Podmínky pro splnění</div>
-            <ul>
-                <li><label><input type="checkbox" id="p6_t1" onchange="saveCheck('p6_t1')"><span>Seminární práce</span></label></li>
-                <li><label><input type="checkbox" id="p6_t2" onchange="saveCheck('p6_t2')"><span>Písemná zkouška</span></label></li>
-            </ul>
-        </div>
+        </aside>
 
-        <!-- PŘEDMĚT 7 -->
-        <div class="subject-card sem1">
-            <div class="subject-header">
-                <h2 class="subject-title">Úvod do knihovnictví</h2>
-                <span class="subject-code">ISKB02</span>
-            </div>
-            <div class="info-grid">
-                <div class="info-item"><strong>Vyučující:</strong> PhDr. Martin Krčál, DiS., Ph.D.</div>
-                <div class="info-item"><strong>Místnost:</strong> B2.13</div>
-                <div class="info-item"><strong>Počet kreditů:</strong> 4</div>
-                <div class="info-item"><strong>Ukončení:</strong> Písemný test</div>
-            </div>
-            <div class="description">
-                <b>📝Stručný popis předmětu:</b> Problematika knihovnictví, seznámení se základními pojmy, legislativou a standardy, které se uplatňují v knihovnických procesech a službách.
-            </div>
-            <div class="materials">
-                <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/ISKB02/" target="_blank">Úvod do knihovnictví</a>
-            </div>
-            <div class="section-title">📅 Rozvrh výuky:</div>
-            <ul class="schedule-grid">
-                <li>18.9. 14:00–15:40</li>
-                <li>9.10. 14:00–15:40</li>
-                <li>6.11. 14:00–15:40</li>
-                <li>27.11. 14:00–15:40</li>
-                <li>18.12. 14:00–15:40</li>
-            </ul>
-            <div class="section-title">✅ Podmínky pro splnění</div>
-            <ul>
-                <li><label><input type="checkbox" id="p7_t1" onchange="saveCheck('p7_t1')"><span>Písemný test</span></label></li>
-            </ul>
-        </div>
+        <main id="subject-container">
 
-        <!-- PŘEDMĚT 8 -->
-        <div class="subject-card sem1">
-            <div class="subject-header">
-                <h2 class="subject-title">Blok expertů</h2>
-                <span class="subject-code">ISKB65</span>
-            </div>
-            <div class="info-grid">
-                <div class="info-item"><strong>Vyučující:</strong> Mgr. Magdaléna Bohuslavová, PhDr. Petr Škyřík, Ph.D.</div>
-                <div class="info-item"><strong>Místnost:</strong> B2.13</div>
-                <div class="info-item"><strong>Počet kreditů:</strong> 4</div>
-                <div class="info-item"><strong>Ukončení:</strong> Účast na přednáškách, vyplnění dotazníků, vytvoření digitálních artefaktů.</div>
-            </div>
-            <div class="description">
-                <b>📝 Stručný popis předmětu:</b> Přednášky zajímavých osobností z oboru i transdisciplinárních expertů a expertek z praxe.
-            </div>
-            <div class="materials">
-                <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/ISKB65/" target="_blank">Blok expertů</a>
-            </div>
-            <div class="section-title">📅 Rozvrh výuky:</div>
-            <ul class="schedule-grid">
-                <li>každý čtvrtek 17.9. - 17.12. 16:00–17:40</li>
-            </ul>
-            <div class="section-title">✅ Podmínky pro splnění</div>
-            <ul>
-                <li><label><input type="checkbox" id="p8_t1" onchange="saveCheck('p8_t1')"><span>Účast na přednášce 1</span></label></li>
-                <li><label><input type="checkbox" id="p8_t2" onchange="saveCheck('p8_t2')"><span>Dotazník k přednášce 1</span></label></li>
-                <li><label><input type="checkbox" id="p8_t3" onchange="saveCheck('p8_t3')"><span>Účast na přednášce 2</span></label></li>
-                <li><label><input type="checkbox" id="p8_t4" onchange="saveCheck('p8_t4')"><span>Dotazník k přednášce 2</span></label></li>
-                <li><label><input type="checkbox" id="p8_t5" onchange="saveCheck('p8_t5')"><span>Účast na přednášce 3</span></label></li>
-                <li><label><input type="checkbox" id="p8_t6" onchange="saveCheck('p8_t6')"><span>Dotazník k přednášce 3</span></label></li>
-                <li><label><input type="checkbox" id="p8_t7" onchange="saveCheck('p8_t7')"><span>Účast na přednášce 4</span></label></li>
-                <li><label><input type="checkbox" id="p8_t8" onchange="saveCheck('p8_t8')"><span>Dotazník k přednášce 4</span></label></li>
-                <li><label><input type="checkbox" id="p8_t9" onchange="saveCheck('p8_t9')"><span>Účast na přednášce 5</span></label></li>
-                <li><label><input type="checkbox" id="p8_t10" onchange="saveCheck('p8_t10')"><span>Dotazník k přednášce 5</span></label></li>
-                <li><label><input type="checkbox" id="p8_t11" onchange="saveCheck('p8_t11')"><span>Digitální artefakt k přednášce 1</span></label></li>
-                <li><label><input type="checkbox" id="p8_t12" onchange="saveCheck('p8_t12')"><span>Digitální artefakt k přednášce 2</span></label></li>
-                <li><label><input type="checkbox" id="p8_t13" onchange="saveCheck('p8_t13')"><span>Digitální artefakt k přednášce 3</span></label></li>
-                <li><label><input type="checkbox" id="p8_t14" onchange="saveCheck('p8_t14')"><span>Digitální artefakt k přednášce 4</span></label></li>
-                <li><label><input type="checkbox" id="p8_t15" onchange="saveCheck('p8_t15')"><span>Závěrečná zkouška</span></label></li>
-            </ul>
-        </div>
+            <!-- ==================== 1. SEMESTR ==================== -->
 
-        <!-- PŘEDMĚT 9 -->
-        <div class="subject-card sem1">
-            <div class="subject-header">
-                <h2 class="subject-title">Filozofie pro posluchače nefilozofických oborů</h2>
-                <span class="subject-code">PHK0001</span>
-            </div>
-            <div class="info-grid">
-                <div class="info-item"><strong>Vyučující:</strong> PhDr. Josef Petrželka, Ph.D.</div>
-                <div class="info-item"><strong>Místnost:</strong> A11</div>
-                <div class="info-item"><strong>Počet kreditů:</strong> 4</div>
-                <div class="info-item"><strong>Ukončení:</strong> Elektronický písemný test</div>
-            </div>
-            <div class="description">
-                <b>📝 Stručný popis předmětu:</b> Představení filosofie obecně a dále filosofické problémy a filosofický způsob uvažování ve třech ústředních disciplínách - ontologii, epistemologii a etice.
-            </div>
-            <div class="materials">
-                <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/PHK0001/" target="_blank">Filozofie pro posluchače nefilozofických oborů</a>
-            </div>
-            <div class="section-title">📅 Rozvrh výuky:</div>
-            <ul class="schedule-grid">
-                <li>25.9. 18:00–19:40</li>
-                <li>23.10. 18:00–19:40</li>
-                <li>4.12. 18:00–19:40</li>
-            </ul>
-            <div class="section-title">✅ Podmínky pro splnění</div>
-            <ul>
-                <li><label><input type="checkbox" id="p9_t1" onchange="saveCheck('p9_t1')"><span>Elektronický písemný test</span></label></li>
-            </ul>
-        </div>
+            <div id="predmet-ai001" class="subject-card sem1">
+                <div class="subject-header">
+                    <h2 class="subject-title">Elements of AI</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">AI001</span>
+                        <span class="subject-credits-tag">2 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> PhDr. Petr Škyřík, Ph.D., Mgr. Bc. Kateřina Švidrnochová</div>
+                    <div class="info-item"><strong>Místnost:</strong> Online - kdykoliv v průběhu semestru</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Certifikát, reflexivní dotazník, Splnění úkolů</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> <a href="https://www.elementsofai.cz/" target="_blank">Online kurz</a>, který si každý plní podle svých možností v rámci semestru.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/AI001/" target="_blank">Elements of AI</a>
+                </div>
+                
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>pátek 25.9.<br><small>1. kapitola</small></li>
+                    <li>sobota 26.9.<br><small>2. kapitola</small></li>
+                    <li>neděle 27.9.<br><small>3. kapitola</small></li>
+                    <li>pondělí 28.9.<br><small>4. kapitola</small></li>
+                    <li>sobota 3.10.<br><small>5. kapitola</small></li>
+                    <li>neděle 4.10.<br><small>6. kapitola</small></li>
+                </ul>
 
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p1_t1" onchange="saveCheck('p1_t1')"><span>1. kapitola: Co je umělá inteligence?</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p1_t2" onchange="saveCheck('p1_t2')"><span>2. kapitola: Řešení problémů pomocí umělé inteligence</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p1_t3" onchange="saveCheck('p1_t3')"><span>3. kapitola: Umělá inteligence v reálném světě</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p1_t4" onchange="saveCheck('p1_t4')"><span>4. kapitola: Strojové učení</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p1_t5" onchange="saveCheck('p1_t5')"><span>5. kapitola: Neuronové sítě</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p1_t6" onchange="saveCheck('p1_t6')"><span>6. kapitola: Důsledky</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p1_t7" onchange="saveCheck('p1_t7')"><span>Získání a nahrání certifikátu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p1_t8" onchange="saveCheck('p1_t8')"><span>Vyplnění reflektivního dotazníku</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-kpi55" class="subject-card sem1">
+                <div class="subject-header">
+                    <h2 class="subject-title">DigCompEdu: Technologie ve vzdělávání</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">KPI55</span>
+                        <span class="subject-credits-tag">5 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> doc. RNDr. Michal Černý, Ph.D., Klára Tauchmanová</div>
+                    <div class="info-item"><strong>Místnost:</strong> Online</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Průběžné úkoly a test</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> <a href="https://kisk.phil.muni.cz/edutech" target="_blank">Online kurz</a> zaměřený na rozvoj digitálních kompetencí v pedagogice. Vytvářím si vlastní nástroje a dáváme si navzájem zpětnou vazbu.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/KPI55/" target="_blank">DigCompEdu: Technologie ve vzdělávání</a>
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>14. - 16. 9. 2026<br><small>Profesní zapojení</small></li>
+                    <li>30. 9. - 2. 10. 2026<br><small>Digitální zdroje</small></li>
+                    <li>16. - 18. 10. 2026<br><small>Digitální hodnocení</small></li>
+                    <li>30. 10. - 1. 11. 2026<br><small>Podpora studentů</small></li>
+                    <li>13. - 15. 11. 2026<br><small>Podpora digitálních kompetencí</small></li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t1" onchange="saveCheck('p2_t1')"><span>Autoevaluace na počátku kurzu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t2" onchange="saveCheck('p2_t2')"><span>Autoevaluace na konci kurzu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t3" onchange="saveCheck('p2_t3')"><span>Profesní zapojení: Stát se členem odborné skupiny - vybrat si oblast zájmu</span></div><span class="deadline-badge">⏰ do 29. 9. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t4" onchange="saveCheck('p2_t4')"><span>Profesní zapojení: Seznam stránek a zdrojů, popis a důvod, proč je budu sledovat</span></div><span class="deadline-badge">⏰ do 29. 9. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t5" onchange="saveCheck('p2_t5')"><span>Profesní zapojení: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></div><span class="deadline-badge">⏰ do 29. 9. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t6" onchange="saveCheck('p2_t6')"><span>Digitální zdroje: Najít otevřený vzdělávací zdroj + adaptace do vlastních podmínky</span></div><span class="deadline-badge">⏰ do 13. 10. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t7" onchange="saveCheck('p2_t7')"><span>Digitální zdroje: Vytvořit heslo na Wikipedii</span></div><span class="deadline-badge">⏰ do 13. 10. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t8" onchange="saveCheck('p2_t8')"><span>Digitální zdroje: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></div><span class="deadline-badge">⏰ do 13. 10. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t9" onchange="saveCheck('p2_t9')"><span>Výuka: Tvorba instruktážního videa (30 s - 5 min)</span></div><span class="deadline-badge">⏰ do 27. 10. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t10" onchange="saveCheck('p2_t10')"><span>Výuka: Návrh lekce, kterou bych ráda učila</span></div><span class="deadline-badge">⏰ do 27. 10. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t11" onchange="saveCheck('p2_t11')"><span>Výuka: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></div><span class="deadline-badge">⏰ do 27. 10. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t12" onchange="saveCheck('p2_t12')"><span>Digitální hodnocení: Jak pracovat s hodnocením a zpětnou vazbou v úkolech z Výuky</span></div><span class="deadline-badge">⏰ do 10. 11. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t13" onchange="saveCheck('p2_t13')"><span>Digitální hodnocení: Tvorba testové sady s výběrem odpovědí k oboru a zpětnou vazbou</span></div><span class="deadline-badge">⏰ do 10. 11. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t14" onchange="saveCheck('p2_t14')"><span>Digitální hodnocení: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></div><span class="deadline-badge">⏰ do 10. 11. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t15" onchange="saveCheck('p2_t15')"><span>Podpora studentů: Titulky k videu z úkolu Výuka</span></div><span class="deadline-badge">⏰ do 24. 11. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t16" onchange="saveCheck('p2_t16')"><span>Podpora studentů: Využít nástroj na syntézu řeči - popsání zkušenosti</span></div><span class="deadline-badge">⏰ do 24. 11. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t17" onchange="saveCheck('p2_t17')"><span>Podpora studentů: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></div><span class="deadline-badge">⏰ do 24. 11. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t18" onchange="saveCheck('p2_t18')"><span>Podpora digitálních kompetencí žáků: Tvorba interaktivního studijního materiálu (interakce na 15 minut)</span></div><span class="deadline-badge">⏰ do 8. 12. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t19" onchange="saveCheck('p2_t19')"><span>Podpora digitálních kompetencí žáků: 3 věci, které dělám pro svůj digital wellbeing, které bych předala studentům a proč</span></div><span class="deadline-badge">⏰ do 8. 12. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t20" onchange="saveCheck('p2_t20')"><span>Podpora digitálních kompetencí žáků: Popsat zkušenost s alespoň s jedním nástrojem z výběrů</span></div><span class="deadline-badge">⏰ do 8. 12. 2026</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t21" onchange="saveCheck('p2_t21')"><span>Všechny udělané zpětné vazby spolužákům</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t22" onchange="saveCheck('p2_t22')"><span>Závěrečný úkol</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p2_t23" onchange="saveCheck('p2_t23')"><span>Složený test (nad 60 % s možností dvou opakování) na konci semestru</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb60" class="subject-card sem1">
+                <div class="subject-header">
+                    <h2 class="subject-title">Prolegomena k oboru</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB60</span>
+                        <span class="subject-credits-tag">2 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Mix</div>
+                    <div class="info-item"><strong>Místnost:</strong> Podle vybraných aktivit</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Absolvované alespoň 3 aktivity, Písemný reflektivní záznam</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Blokový motivační předmět pro seznámení s oborem a spolužáky.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> <a href="https://shimmering-druid-ffe863.netlify.app/" target="_blank">Harmonogram adapťáku</a>
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>pátek 18. 9., 16:00<br><small>Nové technologie a kde je můžete najít (Knihovna FF)</small></li>
+                    <li>pátek 18. 9., 20:00<br><small>KISK 001: Katalog možných budoucností (Knihovna FF)</small></li>
+                    <li>sobota 19. 9., 9:00<br><small>Portfolia (B2.24)</small></li>
+                    <li>sobota 19. 9., 10:00<br><small>Vibecoding – tvorba knihovních aplikací (B2.33)</small></li>
+                    <li>sobota 19. 9., 11:30<br><small>Zorientuj se v knihovně – zážitková hra (Knihovna FF)</small></li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p3_t1" onchange="saveCheck('p3_t1')"><span>Absolvované alespoň 3 aktivity</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p3_t2" onchange="saveCheck('p3_t2')"><span>Písemný reflektivní záznam</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb04" class="subject-card sem1">
+                <div class="subject-header">
+                    <h2 class="subject-title">Psaní odborných textů</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB04</span>
+                        <span class="subject-credits-tag">5 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Mgr. Pavlína Mazáčová, Ph.D.</div>
+                    <div class="info-item"><strong>Místnost:</strong> B2.13</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Docházka (75 %), 2 průběžné úkoly, seminární práce</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Základní kompetence pro práci s odborným textem a se zdroji od vyhledávání po vlastní tvorbu.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/ISKB04/" target="_blank">Psaní odborných textů</a>
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>18.9. 8:00–9:30</li>
+                    <li>9.10. 8:00–9:30</li>
+                    <li>6.11. 8:00–9:30</li>
+                    <li>27.11. 8:00–9:30</li>
+                    <li>18.12. 8:00–9:30</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p4_t1" onchange="saveCheck('p4_t1')"><span>Průběžný úkol 1</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p4_t2" onchange="saveCheck('p4_t2')"><span>Průběžný úkol 2</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p4_t3" onchange="saveCheck('p4_t3')"><span>Seminární práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-kod05" class="subject-card sem1">
+                <div class="subject-header">
+                    <h2 class="subject-title">Informační služby a vyhledávání</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">KÓD05</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> PhDr. Petr Škyřík, Ph.D.</div>
+                    <div class="info-item"><strong>Místnost:</strong> C11</div>
+                    <div class="info-item"><strong>Ukončení:</strong> 3 průběžné úkoly, písemný test</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Seznámení s klíčovými teoriemi informačních věd, principy designového přemýšlení a megatrendy, které ovlivňují informační společnost.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/ISKB03/" target="_blank">Informační služby a vyhledávání</a></div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>18.9. 10:00–11:40</li>
+                    <li>9.10. 10:00–11:40</li>
+                    <li>6.11. 10:00–11:40</li>
+                    <li>27.11. 10:00–11:40</li>
+                    <li>18.12. 10:00–11:40</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p5_t1" onchange="saveCheck('p5_t1')"><span>Osobní portfolio</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p5_t2" onchange="saveCheck('p5_t2')"><span>AI produkt</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p5_t3" onchange="saveCheck('p5_t3')"><span>Prototyp služby</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p5_t4" onchange="saveCheck('p5_t4')"><span>Ústní zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb08" class="subject-card sem1">
+                <div class="subject-header">
+                    <h2 class="subject-title">Literatura v kulturním kontextu</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB08</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Mgr. BcA. Anna Bloch, Ph.D.</div>
+                    <div class="info-item"><strong>Místnost:</strong> B2.13</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Seminární práce, písemná zkouška</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Spojitost literatury a kultury.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/ISKB08/" target="_blank">Literatura v kulturním kontextu</a>
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>18.9. 12:00–13:40</li>
+                    <li>9.10. 12:00–13:40</li>
+                    <li>6.11. 12:00–13:40</li>
+                    <li>27.11. 12:00–13:40</li>
+                    <li>18.12. 12:00–13:40</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p6_t1" onchange="saveCheck('p6_t1')"><span>Seminární práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p6_t2" onchange="saveCheck('p6_t2')"><span>Písemná zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb02" class="subject-card sem1">
+                <div class="subject-header">
+                    <h2 class="subject-title">Úvod do knihovnictví</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB02</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> PhDr. Martin Krčál, DiS., Ph.D.</div>
+                    <div class="info-item"><strong>Místnost:</strong> B2.13</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Písemný test</div>
+                </div>
+                <div class="description">
+                    <b>📝Stručný popis předmětu:</b> Problematika knihovnictví, seznámení se základními pojmy, legislativou a standardy, které se uplatňují v knihovnických procesech a službách.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/ISKB02/" target="_blank">Úvod do knihovnictví</a>
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>18.9. 14:00–15:40</li>
+                    <li>9.10. 14:00–15:40</li>
+                    <li>6.11. 14:00–15:40</li>
+                    <li>27.11. 14:00–15:40</li>
+                    <li>18.12. 14:00–15:40</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p7_t1" onchange="saveCheck('p7_t1')"><span>Písemný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb65" class="subject-card sem1">
+                <div class="subject-header">
+                    <h2 class="subject-title">Blok expertů</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB65</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Mgr. Magdaléna Bohuslavová, PhDr. Petr Škyřík, Ph.D.</div>
+                    <div class="info-item"><strong>Místnost:</strong> B2.13</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Účast na přednáškách, vyplnění dotazníků, vytvoření digitálních artefaktů.</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Přednášky zajímavých osobností z oboru i transdisciplinárních expertů a expertek z praxe.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/ISKB65/" target="_blank">Blok expertů</a>
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>každý čtvrtek 17.9. - 17.12. 16:00–17:40</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t1" onchange="saveCheck('p8_t1')"><span>Účast na přednášce 1</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t2" onchange="saveCheck('p8_t2')"><span>Dotazník k přednášce 1</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t3" onchange="saveCheck('p8_t3')"><span>Účast na přednášce 2</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t4" onchange="saveCheck('p8_t4')"><span>Dotazník k přednášce 2</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t5" onchange="saveCheck('p8_t5')"><span>Účast na přednášce 3</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t6" onchange="saveCheck('p8_t6')"><span>Dotazník k přednášce 3</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t7" onchange="saveCheck('p8_t7')"><span>Účast na přednášce 4</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t8" onchange="saveCheck('p8_t8')"><span>Dotazník k přednášce 4</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t9" onchange="saveCheck('p8_t9')"><span>Účast na přednášce 5</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t10" onchange="saveCheck('p8_t10')"><span>Dotazník k přednášce 5</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t11" onchange="saveCheck('p8_t11')"><span>Digitální artefakt k přednášce 1</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t12" onchange="saveCheck('p8_t12')"><span>Digitální artefakt k přednášce 2</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t13" onchange="saveCheck('p8_t13')"><span>Digitální artefakt k přednášce 3</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t14" onchange="saveCheck('p8_t14')"><span>Digitální artefakt k přednášce 4</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p8_t15" onchange="saveCheck('p8_t15')"><span>Závěrečná zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-phk0001" class="subject-card sem1">
+                <div class="subject-header">
+                    <h2 class="subject-title">Filozofie pro posluchače nefilozofických oborů</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">PHK0001</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> PhDr. Josef Petrželka, Ph.D.</div>
+                    <div class="info-item"><strong>Místnost:</strong> A11</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Elektronický písemný test</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Představení filosofie obecně a dále filosofické problémy a filosofický způsob uvažování ve třech ústředních disciplínách - ontologii, epistemologii a etice.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> <a href="https://is.muni.cz/auth/el/1421/podzim2026/PHK0001/" target="_blank">Filozofie pro posluchače nefilozofických oborů</a>
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>25.9. 18:00–19:40</li>
+                    <li>23.10. 18:00–19:40</li>
+                    <li>4.12. 18:00–19:40</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p9_t1" onchange="saveCheck('p9_t1')"><span>Elektronický písemný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <!-- ==================== 2. SEMESTR ==================== -->
+
+            <div id="predmet-cjvvstp" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">Vstupní test - kombinovaní studenti</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">CJVVsTp</span>
+                        <span class="subject-credits-tag">0 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Online v IS MU</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Vstupní diagnostický test z jazyka pro studenty kombinovaného studia.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na e-learning v IS MU
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Online v průběhu semestru</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p0_t1" onchange="saveCheck('p0_t1')"><span>Splnění vstupního testu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb01" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">Informační věda</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB01</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Základní teoretický předmět zkoumající koncept informace, informační procesy a vývoj oboru informační vědy.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p10_t1" onchange="saveCheck('p10_t1')"><span>Průběžný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p10_t2" onchange="saveCheck('p10_t2')"><span>Závěrečná zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb05" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">Informační prameny a fondy</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB05</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Typologie informačních pramenů, jejich organizace, správa a budování knihovních fondů.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p11_t1" onchange="saveCheck('p11_t1')"><span>Seminární práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p11_t2" onchange="saveCheck('p11_t2')"><span>Závěrečný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb07" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">Digitální kompetence</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB07</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Rozvoj praktických i teoretických dovedností v oblasti digitální gramotnosti a práce s novými technologiemi.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p12_t1" onchange="saveCheck('p12_t1')"><span>Praktický projekt</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p12_t2" onchange="saveCheck('p12_t2')"><span>Závěrečná prezentace</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb34" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">Filozofie informace</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB34</span>
+                        <span class="subject-credits-tag">5 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Filosofické aspekty informační společnosti, etika informací, kybernetika a ontologie dat.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p13_t1" onchange="saveCheck('p13_t1')"><span>Esej na vybrané téma</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p13_t2" onchange="saveCheck('p13_t2')"><span>Aktivní účast na semináři</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb82" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">AI v praxi: Dovednosti pro budoucnost a lepší služby</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB82</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Praktické využití nástrojů generativní AI v informačních službách, knihovnictví a každodenní práci.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p14_t1" onchange="saveCheck('p14_t1')"><span>Tvorba AI prototypu / promptu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p14_t2" onchange="saveCheck('p14_t2')"><span>Reflexe využití v praxi</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb86" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">Digitální stopa</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB86</span>
+                        <span class="subject-credits-tag">3 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Soukromí na internetu, ochrana osobních údajů, bezpečnost v kyberprostoru a správa digitální stopy.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p15_t1" onchange="saveCheck('p15_t1')"><span>Bezpečnostní audit vlastní stopy</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-kpi22" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">Kreativní práce s informacemi</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">KPI22</span>
+                        <span class="subject-credits-tag">5 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Metody tvůrčího myšlení, vizualizace dat, myšlenkové mapování a designové techniky v práci s informacemi.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p16_t1" onchange="saveCheck('p16_t1')"><span>Kreativní projekt</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p16_t2" onchange="saveCheck('p16_t2')"><span>Prezentace řešení</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-kpi33" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">Kurz rozvoje digitálních kompetencí</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">KPI33</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Praktické dílny zaměřené na zvládnutí pokročilých softwarových nástrojů a technologií.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p17_t1" onchange="saveCheck('p17_t1')"><span>Splnění průběžných úkolů</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-med02" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">Úvod do jazykovědy</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">MED02</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Základní lingvistické pojmy, struktura jazyka, fonetika, gramatika a sémantika pro medikální i oborové využití.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p18_t1" onchange="saveCheck('p18_t1')"><span>Písemný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-mkm11" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">Metody kritického myšlení</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">MKM11</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Argumentační fauly, analýza textu, ověřování faktů a rozpoznávání kognitivních zkreslení.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p19_t1" onchange="saveCheck('p19_t1')"><span>Argumentační rozbor</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-fj0011" class="subject-card sem2">
+                <div class="subject-header">
+                    <h2 class="subject-title">Kurz španělštiny online 1</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">FJ0011</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Online</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Základní e-learningový kurz španělského jazyka pro začátečníky.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Online v průběhu semestru</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p20_t1" onchange="saveCheck('p20_t1')"><span>Dokončení online lekcí</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p20_t2" onchange="saveCheck('p20_t2')"><span>Závěrečný e-test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <!-- ==================== 3. SEMESTR ==================== -->
+
+            <div id="predmet-du1730" class="subject-card sem3">
+                <div class="subject-header">
+                    <h2 class="subject-title">Komunikace vědy I</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">DU1730</span>
+                        <span class="subject-credits-tag">5 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Principy vědecké komunikace směrem k veřejnosti, populárně-naučné psaní a prezentace výsledků.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p21_t1" onchange="saveCheck('p21_t1')"><span>Populárně-naučný článek</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p21_t2" onchange="saveCheck('p21_t2')"><span>Závěrečná prezentace</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb06" class="subject-card sem3">
+                <div class="subject-header">
+                    <h2 class="subject-title">Metodologie informačních studií a knihovnictví</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB06</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Výzkumné metody v oboru KISK, kvantitativní a kvalitativní přístupy, tvorba výzkumného projektu.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p22_t1" onchange="saveCheck('p22_t1')"><span>Návrh výzkumného projektu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p22_t2" onchange="saveCheck('p22_t2')"><span>Písemný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb09" class="subject-card sem3">
+                <div class="subject-header">
+                    <h2 class="subject-title">Nástroje a možnosti internetu</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB09</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Pokročilé využití webových aplikací, internetových protokolů a nástrojů pro práci s daty a informacemi.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p23_t1" onchange="saveCheck('p23_t1')"><span>Semestrální projekt</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p23_t2" onchange="saveCheck('p23_t2')"><span>Závěrečná zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb11" class="subject-card sem3">
+                <div class="subject-header">
+                    <h2 class="subject-title">Přehled české literatury. Významná díla a interpretace.</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB11</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Analýza a interpretace klíčových děl české literatury v historickém a společenském kontextu.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p24_t1" onchange="saveCheck('p24_t1')"><span>Interpretace vybraného díla</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p24_t2" onchange="saveCheck('p24_t2')"><span>Ústní / písemná zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb13" class="subject-card sem3">
+                <div class="subject-header">
+                    <h2 class="subject-title">Právní základ pro informační služby</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB13</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Autorské právo, licencování, svobodný přístup k informacím, GDPR a právní regulace paměťových institucí.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p25_t1" onchange="saveCheck('p25_t1')"><span>Právní rozbor případové studie</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p25_t2" onchange="saveCheck('p25_t2')"><span>Závěrečný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb30" class="subject-card sem3">
+                <div class="subject-header">
+                    <h2 class="subject-title">Informace, komunikace a identita</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB30</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Utváření identity v digitálním věku, sociální aspekty komunikace a vliv médií na společnost.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p26_t1" onchange="saveCheck('p26_t1')"><span>Reflektivní esej</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p26_t2" onchange="saveCheck('p26_t2')"><span>Diskuse na kolokviu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb48" class="subject-card sem3">
+                <div class="subject-header">
+                    <h2 class="subject-title">Digitalizace kulturního dědictví</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB48</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Postupy a technologie digitalizace sbírek v knihovnách, muzeích a archivech, správa a dlouhodobé uchovávání dat.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p27_t1" onchange="saveCheck('p27_t1')"><span>Praktická digitalizační úloha</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p27_t2" onchange="saveCheck('p27_t2')"><span>Prezentace projektu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb63" class="subject-card sem3">
+                <div class="subject-header">
+                    <h2 class="subject-title">Informatické myšlení</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB63</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Rozklad problémů, algoritmizace, pattern recognition a základy logiky pro řešení netechnických i technických úkolů.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p28_t1" onchange="saveCheck('p28_t1')"><span>Průběžné algoritmické úkoly</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p28_t2" onchange="saveCheck('p28_t2')"><span>Závěrečný projekt</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskm103" class="subject-card sem3">
+                <div class="subject-header">
+                    <h2 class="subject-title">Kyberbezpečnost jako designový prostor pro intervenci</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKM103</span>
+                        <span class="subject-credits-tag">3 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Human-centered bezpečnost, návrh systémů odolných vůči sociálnímu inženýrství a uživatelsky přívětivé bezpečnostní prvky.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p29_t1" onchange="saveCheck('p29_t1')"><span>Designový návrh bezpečnostní intervence</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-cjva2p" class="subject-card sem3">
+                <div class="subject-header">
+                    <h2 class="subject-title">Online anglický jazyk pro akademické účely II</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">cjva2p</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Online</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Pokročilá akademická angličtina, psaní odborných textů, akademické prezentace a slovní zásoba.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Online v průběhu semestru</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p30_t1" onchange="saveCheck('p30_t1')"><span>Plnění online modulů</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p30_t2" onchange="saveCheck('p30_t2')"><span>Závěrečná e-zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <!-- ==================== 4. SEMESTR ==================== -->
+
+            <div id="predmet-iskb10" class="subject-card sem4">
+                <div class="subject-header">
+                    <h2 class="subject-title">Vyhledávání informací</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB10</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Pokročilé metody a strategie vyhledávání informací v odborných databázích a informačních systémech.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p31_t1" onchange="saveCheck('p31_t1')"><span>Semestrální projekt</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p31_t2" onchange="saveCheck('p31_t2')"><span>Závěrečná zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb12" class="subject-card sem4">
+                <div class="subject-header">
+                    <h2 class="subject-title">Informační systémy</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB12</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Architektura, vývoj, návrh a správa informačních systémů v organizacích a paměťových institucích.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p32_t1" onchange="saveCheck('p32_t1')"><span>Průběžné úkoly</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p32_t2" onchange="saveCheck('p32_t2')"><span>Závěrečný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb14" class="subject-card sem4">
+                <div class="subject-header">
+                    <h2 class="subject-title">Informační vzdělávání</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB14</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Metodika a didaktika informačního vzdělávání, návrh výukových lekcí a rozvoj informační gramotnosti.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p33_t1" onchange="saveCheck('p33_t1')"><span>Návrh výukové lekce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p33_t2" onchange="saveCheck('p33_t2')"><span>Ústní zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb15" class="subject-card sem4">
+                <div class="subject-header">
+                    <h2 class="subject-title">Seminář k bakalářské práci: metodologie ISK</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB15</span>
+                        <span class="subject-credits-tag">5 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Příprava a zpracování metodologického rámce pro bakalářskou práci, formulace výzkumných otázek a cílů.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p34_t1" onchange="saveCheck('p34_t1')"><span>Projekt bakalářské práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p34_t2" onchange="saveCheck('p34_t2')"><span>Prezentace metodologie</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb16" class="subject-card sem4">
+                <div class="subject-header">
+                    <h2 class="subject-title">Referenční a informační služby 1</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB16</span>
+                        <span class="subject-credits-tag">2 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Základy referenčních služeb v knihovnách, vedení referenčního rozhovoru a práce s referenčními zdroji.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p35_t1" onchange="saveCheck('p35_t1')"><span>Praktické cvičení</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskm38" class="subject-card sem4">
+                <div class="subject-header">
+                    <h2 class="subject-title">Média v informačním věku</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKM38</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Role a transformace médií v současné společnosti, mediální ekosystémy a dopady nových technologií.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p36_t1" onchange="saveCheck('p36_t1')"><span>Seminární esej</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p36_t2" onchange="saveCheck('p36_t2')"><span>Účast na kolokviu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskm62" class="subject-card sem4">
+                <div class="subject-header">
+                    <h2 class="subject-title">Webová analytika</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKM62</span>
+                        <span class="subject-credits-tag">5 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Sledování a vyhodnocování návštěvnosti webových stránek, měření konverzí a analytické nástroje (např. Google Analytics).
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p37_t1" onchange="saveCheck('p37_t1')"><span>Praktický analytický projekt</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p37_t2" onchange="saveCheck('p37_t2')"><span>Závěrečný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskm64" class="subject-card sem4">
+                <div class="subject-header">
+                    <h2 class="subject-title">Informační společnost</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKM64</span>
+                        <span class="subject-credits-tag">5 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Sociologické, ekonomické a kulturní dimenze informační společnosti a globální sítě.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p38_t1" onchange="saveCheck('p38_t1')"><span>Průběžná práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-rlb666" class="subject-card sem4">
+                <div class="subject-header">
+                    <h2 class="subject-title">Konec světa</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">RLB666</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Apokalyptické a eschatologické představy v náboženství, kultuře a lidské historii.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p39_t1" onchange="saveCheck('p39_t1')"><span>Reflektivní esej</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <!-- ==================== 5. SEMESTR ==================== -->
+
+            <div id="predmet-iskb17" class="subject-card sem5">
+                <div class="subject-header">
+                    <h2 class="subject-title">Referenční a informační služby 2</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB17</span>
+                        <span class="subject-credits-tag">3 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Pokročilé aspekty referenčních služeb, specializované rešeršní strategie a řízení referenčních pracovišť.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p40_t1" onchange="saveCheck('p40_t1')"><span>Praktická zkouška / rešeršní zpráva</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p40_t2" onchange="saveCheck('p40_t2')"><span>Závěrečný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb18" class="subject-card sem5">
+                <div class="subject-header">
+                    <h2 class="subject-title">Příprava bakalářské práce I</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB18</span>
+                        <span class="subject-credits-tag">7 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Školitel dle výběru</div>
+                    <div class="info-item"><strong>Místnost:</strong> Individuální konzultace</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Samostatná práce na bakalářské práci pod vedením školitele – zpracování teoretické části a metodologie.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Pokyny pro psaní závěrečných prací v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Individuálně dle domluvy</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p41_t1" onchange="saveCheck('p41_t1')"><span>Předložení konceptu a teoretické části práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p41_t2" onchange="saveCheck('p41_t2')"><span>Pravidelné konzultace se vedoucím práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb19" class="subject-card sem5">
+                <div class="subject-header">
+                    <h2 class="subject-title">Odborná praxe</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB19</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Pracoviště dle výběru / instituce</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Absolvování praxe v knihovně, informační instituci či paměťovém zařízení za účelem získání praktických zkušeností.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Formuláře k praxi v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Dle dohody s institucí</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p42_t1" onchange="saveCheck('p42_t1')"><span>Odpracování stanoveného počtu hodin</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p42_t2" onchange="saveCheck('p42_t2')"><span>Předložení potvrzení a reflektivního deníku z praxe</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <!-- ==================== 6. SEMESTR ==================== -->
+
+            <div id="predmet-iskb20" class="subject-card sem6">
+                <div class="subject-header">
+                    <h2 class="subject-title">Příprava bakalářské práce II</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB20</span>
+                        <span class="subject-credits-tag">14 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Školitel dle výběru</div>
+                    <div class="info-item"><strong>Místnost:</strong> Individuální konzultace</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Dokončení bakalářské práce, provedení výzkumu/praktické části a odevzdání do archivu IS MU.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Archiv diplomové práce v IS MU
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Individuálně dle domluvy</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p43_t1" onchange="saveCheck('p43_t1')"><span>Dokončení praktické a analytické části</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p43_t2" onchange="saveCheck('p43_t2')"><span>Odevzdání bakalářské práce do archivu IS MU</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb21" class="subject-card sem6">
+                <div class="subject-header">
+                    <h2 class="subject-title">Bakalářská zkouška</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB21</span>
+                        <span class="subject-credits-tag">0 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Zkušební komise</div>
+                    <div class="info-item"><strong>Místnost:</strong> Určená místnost zkušební komise</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Státní závěrečná zkouška (szk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Ústní obhajoba bakalářské práce a státní závěrečná zkouška z okruhů oboru ISK.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Okruhy ke státním závěrečným zkouškám KISK
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Dle harmonogramu SZZ</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p44_t1" onchange="saveCheck('p44_t1')"><span>Obhajoba bakalářské práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p44_t2" onchange="saveCheck('p44_t2')"><span>Složení ústní část SZZ</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+        </main>
     </div>
 </div>
 
 <script>
-    function filterSemester(semClass, event) {
-        const buttons = document.querySelectorAll('.sem-btn');
-        buttons.forEach(btn => btn.classList.remove('active'));
-        if (event) {
-            event.target.classList.add('active');
-        }
+    function toggleSemester(semKey) {
+        const targetGroup = document.getElementById(`group-${semKey}`);
+        const isAlreadyOpen = targetGroup.classList.contains('open');
 
+        // Zavře všechny skupiny a odstraní aktivní zvýraznění ze všech tlačítek
+        document.querySelectorAll('.semester-group').forEach(group => group.classList.remove('open'));
+        document.querySelectorAll('.sem-btn').forEach(btn => btn.classList.remove('active'));
+
+        if (!isAlreadyOpen) {
+            targetGroup.classList.add('open');
+            targetGroup.querySelector('.sem-btn').classList.add('active');
+            filterSubjectCards(semKey);
+        } else {
+            // Pokud byl již otevřený a uživatel ho kliknutím zavřel, necháme skryté karty
+            filterSubjectCards(null);
+        }
+    }
+
+    function filterSubjectCards(semKey) {
         const cards = document.querySelectorAll('.subject-card');
         cards.forEach(card => {
-            if (card.classList.contains(semClass)) {
+            if (semKey && card.classList.contains(semKey)) {
                 card.style.display = 'block';
             } else {
                 card.style.display = 'none';
@@ -584,10 +1951,15 @@ a:hover {
         if (checkboxes.length === 0) return;
 
         const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        const cardId = card.id;
+        const navLink = document.querySelector(`.subject-nav-link[data-target="${cardId}"]`);
+
         if (allChecked) {
             card.classList.add('completed');
+            if (navLink) navLink.classList.add('completed');
         } else {
             card.classList.remove('completed');
+            if (navLink) navLink.classList.remove('completed');
         }
     }
 
@@ -595,7 +1967,6 @@ a:hover {
         const checkbox = document.getElementById(id);
         localStorage.setItem(id, checkbox.checked);
         
-        // Aktualizace zeleného podbarvení předmětu
         const card = checkbox.closest('.subject-card');
         if (card) {
             checkSubjectCompletion(card);
@@ -603,7 +1974,6 @@ a:hover {
     }
 
     window.onload = function() {
-        // Načtení uloženého stavu ze storage
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(cb => {
             const savedState = localStorage.getItem(cb.id);
@@ -612,10 +1982,42 @@ a:hover {
             }
         });
 
-        // Kontrola splnění pro všechny karty předmětů po načtení
         const cards = document.querySelectorAll('.subject-card');
         cards.forEach(card => {
             checkSubjectCompletion(card);
+        });
+
+        // Výchozí nastavení: 1. semestr otevřen v menu i na ploše
+        filterSubjectCards('sem1');
+
+        // Navázání událostí na odkazy předmětů pro správné zobrazování a skrolování
+        document.querySelectorAll('.subject-nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('data-target');
+                const targetCard = document.getElementById(targetId);
+
+                if (targetCard) {
+                    let semClass = null;
+                    targetCard.classList.forEach(cls => {
+                        if (cls.startsWith('sem')) {
+                            semClass = cls;
+                        }
+                    });
+
+                    if (semClass) {
+                        const semesterGroup = document.getElementById(`group-${semClass}`);
+                        if (semesterGroup && !semesterGroup.classList.contains('open')) {
+                            toggleSemester(semClass);
+                        } else {
+                            filterSubjectCards(semClass);
+                        }
+                    }
+
+                    setTimeout(() => {
+                        targetCard.scrollIntoView({ behavior: 'smooth' });
+                    }, 10);
+                }
+            });
         });
     };
 </script>
