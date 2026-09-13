@@ -3,33 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Můj Přehled Zpráv</title>
+    <title>Můj Přehled Zpráv - KISK</title>
     <style>
-        body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f4f4f9; color: #333; }
-        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
-        .back-link { display: inline-block; margin-bottom: 15px; color: #0066cc; text-decoration: none; }
-        .back-link:hover { text-decoration: underline; }
-        .feed-section { background: white; margin-bottom: 25px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .feed-title { color: #2c3e50; margin-top: 0; }
-        ul { list-style: none; padding: 0; }
-        li { margin-bottom: 12px; }
-        a { color: #0066cc; text-decoration: none; font-weight: 500; }
-        a:hover { text-decoration: underline; }
-        .date { color: #888; font-size: 0.85em; margin-left: 8px; }
+        :root {
+            --kisk-blue: #0000dc;     /* Sytá modrá pro hlavní pozadí */
+            --kisk-yellow: #f4d371;   /* Žlutá barva pro rámečky */
+            --card-light-bg: #eef2ff; /* Světle modré pozadí karet */
+            --card-text: #0000dc;     /* Modrý text uvnitř karet */
+            --text-muted: #3b3bc4;    /* Tmavší odstín modré pro doplňkový text */
+            --white: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+        
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 40px 20px; 
+            background-color: var(--kisk-blue); 
+            color: var(--white); 
+        }
+
+        .back-link { 
+            display: inline-block; 
+            margin-bottom: 20px; 
+            color: var(--kisk-yellow); 
+            text-decoration: none; 
+            font-weight: 500;
+        }
+        .back-link:hover { 
+            text-decoration: underline; 
+        }
+
+        header-box, h1 {
+            border: 2px solid var(--kisk-yellow);
+            border-radius: 16px;
+            padding: 25px 20px;
+            background: rgba(0, 0, 220, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h1 { 
+            color: var(--kisk-yellow); 
+            font-size: 2rem;
+            margin: 0 0 25px 0;
+            font-weight: 700;
+        }
+        
+        .sources-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .source-pill {
+            background: rgba(0, 0, 220, 0.4);
+            border: 2px solid var(--kisk-yellow);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: var(--kisk-yellow);
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: background 0.2s, transform 0.2s;
+        }
+        
+        .source-pill:hover {
+            background: var(--kisk-yellow);
+            color: var(--kisk-blue);
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        .feed-section { 
+            background: rgba(255, 255, 255, 0.05); 
+            border: 2px solid var(--kisk-yellow);
+            margin-bottom: 25px; 
+            padding: 20px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
+        }
+        
+        .feed-title { 
+            color: var(--kisk-yellow); 
+            margin-top: 0; 
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .tiles-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+            gap: 15px; 
+        }
+        
+        .tile { 
+            background: var(--card-light-bg); 
+            border: 5px solid var(--kisk-yellow); 
+            border-radius: 14px; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            text-decoration: none; 
+            color: var(--card-text); 
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; 
+        }
+        
+        .tile:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35); 
+            background: #ffffff;
+        }
+        
+        .tile-icon-header {
+            background: rgba(0, 0, 220, 0.05);
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid var(--kisk-yellow);
+        }
+        
+        .tile-icon-header svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--card-text);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        .tile-content { 
+            padding: 14px; 
+            display: flex; 
+            flex-direction: column; 
+            flex-grow: 1; 
+            justify-content: space-between; 
+        }
+        
+        .tile-title { 
+            font-size: 0.95em; 
+            font-weight: 600; 
+            color: var(--card-text); 
+            margin-bottom: 8px; 
+            line-height: 1.3;
+        }
+        
+        .tile:hover .tile-title { 
+            text-decoration: underline; 
+        }
+        
+        .tile-date { 
+            color: var(--text-muted); 
+            font-size: 0.8em; 
+            font-weight: 500;
+        }
+        
+        .fallback { 
+            font-size: 0.95em; 
+            color: var(--kisk-yellow); 
+            margin-top: 10px; 
+        }
+
+        .fallback a {
+            color: var(--white);
+        }
     </style>
 </head>
 <body>
 
     <a href="index.html" class="back-link">← Vrátit se na hlavní rozcestník</a>
-    <h1>Můj Přehled Zpráv</h1>
+    <h1>Novinky z vybraných zdrojů</h1>
+    
+    <div class="sources-nav">
+        <a href="#spomocnik" class="source-pill">Spomocník ↓</a>
+        <a href="#jmle" class="source-pill">JMLE ↓</a>
+        <a href="#edmo" class="source-pill">EDMO ↓</a>
+    </div>
+
     <div id="content">Načítám články...</div>
 
     <script>
-        // Zde definujete seznam webů a jejich RSS adresy
         const feeds = [
-            { name: "Manipulátoři.cz", url: "https://manipulatori.cz/feed/" }
-            // Sem můžete přidat další portály tímto způsobem:
-            // ,{ name: "Název dalšího webu", url: "https://adresa-webu.cz/feed/" }
+            { 
+                id: "spomocnik",
+                name: "Spomocník", 
+                url: "https://spomocnik.rvp.cz/rss", 
+                siteUrl: "https://spomocnik.rvp.cz" 
+            },
+            { 
+                id: "jmle",
+                name: "JMLE", 
+                url: "https://digitalcommons.uri.edu/jmle/recent.rss", 
+                siteUrl: "https://digitalcommons.uri.edu/jmle" 
+            },
+            { 
+                id: "edmo",
+                name: "EDMO", 
+                url: "https://ec.europa.eu/newsroom/edmo/feed?item_type_id=1884&lang=en&orderby=item_date", 
+                siteUrl: "https://ec.europa.eu/newsroom/edmo" 
+            }
         ];
 
         async function loadFeeds() {
@@ -39,40 +219,52 @@
             for (const feed of feeds) {
                 const section = document.createElement('div');
                 section.className = 'feed-section';
+                section.id = feed.id;
                 section.innerHTML = `<h2 class="feed-title">${feed.name}</h2><p>Načítání...</p>`;
                 container.appendChild(section);
 
                 try {
-                    // Použijeme CORS proxy AllOrigins k obcházení blokování a CORS
-                    const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(feed.url)}`);
+                    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`;
+                    const res = await fetch(apiUrl);
                     const data = await res.json();
 
-                    if (data.contents) {
-                        // Převod načteného XML textu na zpracovatelný DOM dokument
-                        const parser = new DOMParser();
-                        const xmlDoc = parser.parseFromString(data.contents, "text/xml");
-                        const items = xmlDoc.querySelectorAll("item");
+                    if (data.status === 'ok' && data.items && data.items.length > 0) {
+                        let html = '<div class="tiles-container">';
+                        
+                        data.items.slice(0, 6).forEach(item => {
+                            const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString('cs-CZ') : '';
 
-                        if (items.length > 0) {
-                            let html = '<ul>';
-                            Array.from(items).slice(0, 5).forEach(item => {
-                                const title = item.querySelector("title")?.textContent || "Bez názvu";
-                                const link = item.querySelector("link")?.textContent || "#";
-                                const pubDateRaw = item.querySelector("pubDate")?.textContent;
-                                const date = pubDateRaw ? new Date(pubDateRaw).toLocaleDateString('cs-CZ') : '';
+                            html += `
+                                <a href="${item.link}" target="_blank" class="tile">
+                                    <div class="tile-icon-header">
+                                        <svg viewBox="0 0 24 24">
+                                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                                            <path d="M6 6h10M6 10h10M6 14h6"/>
+                                        </svg>
+                                    </div>
+                                    <div class="tile-content">
+                                        <div class="tile-title">${item.title}</div>
+                                        <span class="tile-date">${date}</span>
+                                    </div>
+                                </a>
+                            `;
+                        });
 
-                                html += `<li><a href="${link}" target="_blank">${title}</a><span class="date">${date}</span></li>`;
-                            });
-                            html += '</ul>';
-                            section.innerHTML = `<h2 class="feed-title">${feed.name}</h2>${html}`;
-                        } else {
-                            section.innerHTML = `<h2 class="feed-title">${feed.name}</h2><p>Ve feedu nebyly nalezeny žádné články.</p>`;
-                        }
+                        html += '</div>';
+                        section.innerHTML = `<h2 class="feed-title">${feed.name}</h2>${html}`;
                     } else {
-                        section.innerHTML = `<h2 class="feed-title">${feed.name}</h2><p>Chyba při načítání feedu.</p>`;
+                        section.innerHTML = `
+                            <h2 class="feed-title">${feed.name}</h2>
+                            <p class="fallback">Nepodařilo se načíst položky z feedu.</p>
+                            <p><a href="${feed.siteUrl}" target="_blank">Otevřít web ${feed.name} přímo →</a></p>
+                        `;
                     }
                 } catch (e) {
-                    section.innerHTML = `<h2 class="feed-title">${feed.name}</h2><p>Feed se nepodařilo načíst.</p>`;
+                    section.innerHTML = `
+                        <h2 class="feed-title">${feed.name}</h2>
+                        <p class="fallback">Chyba připojení k RSS službě.</p>
+                        <p><a href="${feed.url}" target="_blank">Otevřít RSS feed ručně</a></p>
+                    `;
                 }
             }
         }
