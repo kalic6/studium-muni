@@ -35,6 +35,18 @@
             width: 100%;
         }
 
+        .back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
         header {
             text-align: center;
             margin-bottom: 25px;
@@ -369,6 +381,7 @@
 <body>
 
 <div class="container">
+    <a href="index.html" class="back-link">← Vrátit se na hlavní rozcestník</a>
     <header>
         <h1>Můj studijní přehled</h1>
         <p>Kombinované studium</p>
@@ -1743,7 +1756,7 @@
                     <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
                 </div>
                 <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Apokalyptické a eschatologické představy v náboženství, kultuře a lidské historii.
+                    <b>📝 Stručný popis předmětu:</b> Apokalyptické a eschatologické představy v náboženství a kultuře.
                 </div>
                 <div class="materials">
                     <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
@@ -1754,161 +1767,7 @@
                 </ul>
                 <div class="section-title">✅ Podmínky pro splnění</div>
                 <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p39_t1" onchange="saveCheck('p39_t1')"><span>Reflektivní esej</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                </ul>
-            </div>
-
-            <!-- ==================== 5. SEMESTR ==================== -->
-
-            <div id="predmet-iskb17" class="subject-card sem5">
-                <div class="subject-header">
-                    <h2 class="subject-title">Referenční a informační služby 2</h2>
-                    <div class="subject-header-right">
-                        <span class="subject-code">ISKB17</span>
-                        <span class="subject-credits-tag">3 kr.</span>
-                    </div>
-                </div>
-                <div class="info-grid">
-                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
-                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
-                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
-                </div>
-                <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Pokročilé aspekty referenčních služeb, specializované rešeršní strategie a řízení referenčních pracovišť.
-                </div>
-                <div class="materials">
-                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
-                </div>
-                <div class="section-title">📅 Rozvrh výuky:</div>
-                <ul class="schedule-grid">
-                    <li>Bude upřesněno</li>
-                </ul>
-                <div class="section-title">✅ Podmínky pro splnění</div>
-                <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p40_t1" onchange="saveCheck('p40_t1')"><span>Praktická zkouška / rešeršní zpráva</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p40_t2" onchange="saveCheck('p40_t2')"><span>Závěrečný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                </ul>
-            </div>
-
-            <div id="predmet-iskb18" class="subject-card sem5">
-                <div class="subject-header">
-                    <h2 class="subject-title">Příprava bakalářské práce I</h2>
-                    <div class="subject-header-right">
-                        <span class="subject-code">ISKB18</span>
-                        <span class="subject-credits-tag">7 kr.</span>
-                    </div>
-                </div>
-                <div class="info-grid">
-                    <div class="info-item"><strong>Vyučující:</strong> Školitel dle výběru</div>
-                    <div class="info-item"><strong>Místnost:</strong> Individuální konzultace</div>
-                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
-                </div>
-                <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Samostatná práce na bakalářské práci pod vedením školitele – zpracování teoretické části a metodologie.
-                </div>
-                <div class="materials">
-                    <b>📚 Studijní materiály:</b> Pokyny pro psaní závěrečných prací v IS
-                </div>
-                <div class="section-title">📅 Rozvrh výuky:</div>
-                <ul class="schedule-grid">
-                    <li>Individuálně dle domluvy</li>
-                </ul>
-                <div class="section-title">✅ Podmínky pro splnění</div>
-                <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p41_t1" onchange="saveCheck('p41_t1')"><span>Předložení konceptu a teoretické části práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p41_t2" onchange="saveCheck('p41_t2')"><span>Pravidelné konzultace se vedoucím práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                </ul>
-            </div>
-
-            <div id="predmet-iskb19" class="subject-card sem5">
-                <div class="subject-header">
-                    <h2 class="subject-title">Odborná praxe</h2>
-                    <div class="subject-header-right">
-                        <span class="subject-code">ISKB19</span>
-                        <span class="subject-credits-tag">4 kr.</span>
-                    </div>
-                </div>
-                <div class="info-grid">
-                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
-                    <div class="info-item"><strong>Místnost:</strong> Pracoviště dle výběru / instituce</div>
-                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
-                </div>
-                <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Absolvování praxe v knihovně, informační instituci či paměťovém zařízení za účelem získání praktických zkušeností.
-                </div>
-                <div class="materials">
-                    <b>📚 Studijní materiály:</b> Formuláře k praxi v IS
-                </div>
-                <div class="section-title">📅 Rozvrh výuky:</div>
-                <ul class="schedule-grid">
-                    <li>Dle dohody s institucí</li>
-                </ul>
-                <div class="section-title">✅ Podmínky pro splnění</div>
-                <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p42_t1" onchange="saveCheck('p42_t1')"><span>Odpracování stanoveného počtu hodin</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p42_t2" onchange="saveCheck('p42_t2')"><span>Předložení potvrzení a reflektivního deníku z praxe</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                </ul>
-            </div>
-
-            <!-- ==================== 6. SEMESTR ==================== -->
-
-            <div id="predmet-iskb20" class="subject-card sem6">
-                <div class="subject-header">
-                    <h2 class="subject-title">Příprava bakalářské práce II</h2>
-                    <div class="subject-header-right">
-                        <span class="subject-code">ISKB20</span>
-                        <span class="subject-credits-tag">14 kr.</span>
-                    </div>
-                </div>
-                <div class="info-grid">
-                    <div class="info-item"><strong>Vyučující:</strong> Školitel dle výběru</div>
-                    <div class="info-item"><strong>Místnost:</strong> Individuální konzultace</div>
-                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
-                </div>
-                <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Dokončení bakalářské práce, provedení výzkumu/praktické části a odevzdání do archivu IS MU.
-                </div>
-                <div class="materials">
-                    <b>📚 Studijní materiály:</b> Archiv diplomové práce v IS MU
-                </div>
-                <div class="section-title">📅 Rozvrh výuky:</div>
-                <ul class="schedule-grid">
-                    <li>Individuálně dle domluvy</li>
-                </ul>
-                <div class="section-title">✅ Podmínky pro splnění</div>
-                <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p43_t1" onchange="saveCheck('p43_t1')"><span>Dokončení praktické a analytické části</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p43_t2" onchange="saveCheck('p43_t2')"><span>Odevzdání bakalářské práce do archivu IS MU</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                </ul>
-            </div>
-
-            <div id="predmet-iskb21" class="subject-card sem6">
-                <div class="subject-header">
-                    <h2 class="subject-title">Bakalářská zkouška</h2>
-                    <div class="subject-header-right">
-                        <span class="subject-code">ISKB21</span>
-                        <span class="subject-credits-tag">0 kr.</span>
-                    </div>
-                </div>
-                <div class="info-grid">
-                    <div class="info-item"><strong>Vyučující:</strong> Zkušební komise</div>
-                    <div class="info-item"><strong>Místnost:</strong> Určená místnost zkušební komise</div>
-                    <div class="info-item"><strong>Ukončení:</strong> Státní závěrečná zkouška (szk)</div>
-                </div>
-                <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Ústní obhajoba bakalářské práce a státní závěrečná zkouška z okruhů oboru ISK.
-                </div>
-                <div class="materials">
-                    <b>📚 Studijní materiály:</b> Okruhy ke státním závěrečným zkouškám KISK
-                </div>
-                <div class="section-title">📅 Rozvrh výuky:</div>
-                <ul class="schedule-grid">
-                    <li>Dle harmonogramu SZZ</li>
-                </ul>
-                <div class="section-title">✅ Podmínky pro splnění</div>
-                <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p44_t1" onchange="saveCheck('p44_t1')"><span>Obhajoba bakalářské práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p44_t2" onchange="saveCheck('p44_t2')"><span>Složení ústní část SZZ</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p39_t1" onchange="saveCheck('p39_t1')"><span>Seminární práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
                 </ul>
             </div>
 
@@ -1917,109 +1776,29 @@
 </div>
 
 <script>
-    function toggleSemester(semKey) {
-        const targetGroup = document.getElementById(`group-${semKey}`);
-        const isAlreadyOpen = targetGroup.classList.contains('open');
-
-        // Zavře všechny skupiny a odstraní aktivní zvýraznění ze všech tlačítek
-        document.querySelectorAll('.semester-group').forEach(group => group.classList.remove('open'));
-        document.querySelectorAll('.sem-btn').forEach(btn => btn.classList.remove('active'));
-
-        if (!isAlreadyOpen) {
-            targetGroup.classList.add('open');
-            targetGroup.querySelector('.sem-btn').classList.add('active');
-            filterSubjectCards(semKey);
-        } else {
-            // Pokud byl již otevřený a uživatel ho kliknutím zavřel, necháme skryté karty
-            filterSubjectCards(null);
-        }
-    }
-
-    function filterSubjectCards(semKey) {
-        const cards = document.querySelectorAll('.subject-card');
-        cards.forEach(card => {
-            if (semKey && card.classList.contains(semKey)) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-
-    function checkSubjectCompletion(card) {
-        const checkboxes = card.querySelectorAll('input[type="checkbox"]');
-        if (checkboxes.length === 0) return;
-
-        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-        const cardId = card.id;
-        const navLink = document.querySelector(`.subject-nav-link[data-target="${cardId}"]`);
-
-        if (allChecked) {
-            card.classList.add('completed');
-            if (navLink) navLink.classList.add('completed');
-        } else {
-            card.classList.remove('completed');
-            if (navLink) navLink.classList.remove('completed');
-        }
+    function toggleSemester(semId) {
+        const group = document.getElementById('group-' + semId);
+        const btn = group.querySelector('.sem-btn');
+        group.classList.toggle('open');
+        btn.classList.toggle('active');
     }
 
     function saveCheck(id) {
         const checkbox = document.getElementById(id);
         localStorage.setItem(id, checkbox.checked);
-        
-        const card = checkbox.closest('.subject-card');
-        if (card) {
-            checkSubjectCompletion(card);
-        }
     }
 
-    window.onload = function() {
+    function loadChecks() {
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(cb => {
-            const savedState = localStorage.getItem(cb.id);
-            if (savedState === 'true') {
-                cb.checked = true;
+            const saved = localStorage.getItem(cb.id);
+            if (saved !== null) {
+                cb.checked = saved === 'true';
             }
         });
+    }
 
-        const cards = document.querySelectorAll('.subject-card');
-        cards.forEach(card => {
-            checkSubjectCompletion(card);
-        });
-
-        // Výchozí nastavení: 1. semestr otevřen v menu i na ploše
-        filterSubjectCards('sem1');
-
-        // Navázání událostí na odkazy předmětů pro správné zobrazování a skrolování
-        document.querySelectorAll('.subject-nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('data-target');
-                const targetCard = document.getElementById(targetId);
-
-                if (targetCard) {
-                    let semClass = null;
-                    targetCard.classList.forEach(cls => {
-                        if (cls.startsWith('sem')) {
-                            semClass = cls;
-                        }
-                    });
-
-                    if (semClass) {
-                        const semesterGroup = document.getElementById(`group-${semClass}`);
-                        if (semesterGroup && !semesterGroup.classList.contains('open')) {
-                            toggleSemester(semClass);
-                        } else {
-                            filterSubjectCards(semClass);
-                        }
-                    }
-
-                    setTimeout(() => {
-                        targetCard.scrollIntoView({ behavior: 'smooth' });
-                    }, 10);
-                }
-            });
-        });
-    };
+    window.onload = loadChecks;
 </script>
 
 </body>
