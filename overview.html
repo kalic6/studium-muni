@@ -1783,9 +1783,30 @@
         btn.classList.toggle('active');
     }
 
+    function checkSubjectCompletion(card) {
+        if (!card) return;
+        const checkboxes = card.querySelectorAll('input[type="checkbox"]');
+        const subjectId = card.id;
+        const navLink = document.querySelector(`.subject-nav-link[data-target="${subjectId}"]`);
+
+        if (checkboxes.length === 0) return;
+
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+
+        if (allChecked) {
+            card.classList.add('completed');
+            if (navLink) navLink.classList.add('completed');
+        } else {
+            card.classList.remove('completed');
+            if (navLink) navLink.classList.remove('completed');
+        }
+    }
+
     function saveCheck(id) {
         const checkbox = document.getElementById(id);
         localStorage.setItem(id, checkbox.checked);
+        const card = checkbox.closest('.subject-card');
+        checkSubjectCompletion(card);
     }
 
     function loadChecks() {
@@ -1796,6 +1817,9 @@
                 cb.checked = saved === 'true';
             }
         });
+
+        const cards = document.querySelectorAll('.subject-card');
+        cards.forEach(card => checkSubjectCompletion(card));
     }
 
     window.onload = loadChecks;
