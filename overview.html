@@ -6,12 +6,12 @@
     <title>Přehled kombi studia</title>
     <style>
         :root {
-            --bg-color: #f4f6f8;
-            --card-bg: #ffffff;
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --text-color: #333333;
-            --border-color: #e2e8f0;
+            --kisk-blue: #0000dc;     /* Sytá modrá pro hlavní pozadí */
+            --kisk-yellow: #f4d371;   /* Žlutá barva pro rámečky */
+            --card-light-bg: #eef2ff; /* Světle modré pozadí karet */
+            --card-text: #0000dc;     /* Modrý text uvnitř karet */
+            --text-muted: #3b3bc4;    /* Tmavší odstín modré pro doplňkový text */
+            --white: #ffffff;
             --completed-bg: #e6fffa;
             --completed-border: #38b2ac;
         }
@@ -21,11 +21,11 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--kisk-blue);
+            color: var(--white);
             margin: 0;
-            padding: 20px;
+            padding: 40px 20px;
             display: flex;
             justify-content: center;
         }
@@ -37,10 +37,10 @@
 
         .back-link {
             display: inline-block;
-            margin-bottom: 15px;
-            color: var(--accent-color);
+            margin-bottom: 20px;
+            color: var(--kisk-yellow);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .back-link:hover {
@@ -48,13 +48,26 @@
         }
 
         header {
-            text-align: center;
+            border: 2px solid var(--kisk-yellow);
+            border-radius: 16px;
+            padding: 25px 20px;
+            background: rgba(0, 0, 220, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             margin-bottom: 25px;
+            text-align: center;
         }
 
         h1 {
-            color: var(--primary-color);
-            margin-bottom: 5px;
+            color: var(--kisk-yellow);
+            font-size: 2rem;
+            margin: 0 0 5px 0;
+            font-weight: 700;
+        }
+
+        header p {
+            color: var(--white);
+            margin: 0;
+            font-size: 1.1rem;
         }
 
         .layout-grid {
@@ -75,21 +88,21 @@
         }
 
         .semester-group {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            background: rgba(0, 0, 220, 0.4);
+            border: 2px solid var(--kisk-yellow);
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
 
         .sem-btn {
             width: 100%;
-            background-color: #edf2f7;
+            background: rgba(0, 0, 220, 0.2);
             border: none;
             padding: 12px 15px;
             cursor: pointer;
             font-weight: bold;
-            color: var(--primary-color);
+            color: var(--kisk-yellow);
             transition: all 0.2s ease;
             text-align: left;
             display: flex;
@@ -99,19 +112,19 @@
         }
 
         .sem-btn.active {
-            background-color: var(--accent-color);
-            color: white;
+            background-color: var(--kisk-yellow);
+            color: var(--kisk-blue);
         }
 
         .sem-btn .sem-credits {
             font-size: 0.8rem;
-            background: rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.15);
             padding: 3px 8px;
             border-radius: 12px;
         }
 
         .sem-btn.active .sem-credits {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(0, 0, 220, 0.15);
         }
 
         .sem-btn:hover {
@@ -123,8 +136,8 @@
             flex-direction: column;
             gap: 4px;
             padding: 8px;
-            background: #ffffff;
-            border-top: 1px solid var(--border-color);
+            background: var(--card-light-bg);
+            border-top: 2px solid var(--kisk-yellow);
         }
 
         .semester-group.open .subject-nav-list {
@@ -132,13 +145,13 @@
         }
 
         .subject-nav-link {
-            background-color: #f8fafc;
-            color: var(--primary-color);
+            background-color: var(--white);
+            color: var(--card-text);
             padding: 8px 10px;
             border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 500;
-            transition: background-color 0.2s ease, color 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -147,19 +160,19 @@
         }
 
         .subject-nav-link:hover {
-            background-color: var(--accent-color);
-            color: white;
+            background-color: var(--kisk-yellow);
+            color: var(--kisk-blue);
         }
 
         .subject-nav-link .nav-credits {
             font-size: 0.75rem;
-            color: #718096;
+            color: var(--text-muted);
             font-weight: 600;
             flex-shrink: 0;
         }
 
         .subject-nav-link:hover .nav-credits {
-            color: #e2e8f0;
+            color: var(--kisk-blue);
         }
 
         .subject-nav-link.completed {
@@ -180,14 +193,15 @@
         }
 
         .subject-card {
-            background: var(--card-bg);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border: 1px solid var(--border-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            background: var(--card-light-bg);
+            border-radius: 14px;
+            padding: 30px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 5px solid var(--kisk-yellow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
             scroll-margin-top: 20px;
+            color: var(--card-text);
         }
 
         .subject-card.completed {
@@ -199,14 +213,14 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            border-bottom: 2px solid var(--accent-color);
+            border-bottom: 2px solid var(--kisk-yellow);
             padding-bottom: 8px;
             margin-bottom: 15px;
         }
 
         .subject-title {
             margin: 0;
-            color: var(--primary-color);
+            color: var(--card-text);
             font-size: 1.3rem;
         }
 
@@ -217,18 +231,18 @@
         }
 
         .subject-code {
-            background: #edf2f7;
+            background: rgba(0, 0, 220, 0.08);
             padding: 3px 8px;
             border-radius: 4px;
             font-size: 0.85rem;
             font-weight: bold;
-            color: #4a5568;
+            color: var(--card-text);
         }
 
         .subject-credits-tag {
-            background: #ebf8ff;
-            color: #2b6cb0;
-            border: 1px solid #bee3f8;
+            background: var(--kisk-yellow);
+            color: var(--kisk-blue);
+            border: 1px solid var(--kisk-yellow);
             padding: 3px 8px;
             border-radius: 4px;
             font-size: 0.85rem;
@@ -239,25 +253,35 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 8px;
-            background: #f8fafc;
+            background: rgba(0, 0, 220, 0.05);
             padding: 12px;
             border-radius: 6px;
             margin-bottom: 15px;
             font-size: 0.95rem;
+            color: var(--card-text);
         }
 
         .info-item strong {
-            color: var(--primary-color);
+            color: var(--card-text);
         }
 
         .description, .materials {
             margin-bottom: 15px;
             line-height: 1.5;
-            color: #4a5568;
+            color: var(--text-muted);
+        }
+
+        .description a, .materials a {
+            color: var(--card-text);
+            font-weight: 600;
+        }
+
+        .description a:hover, .materials a:hover {
+            text-decoration: underline;
         }
 
         a {
-            color: var(--accent-color);
+            color: var(--kisk-yellow);
             text-decoration: none;
             font-weight: 500;
         }
@@ -270,7 +294,7 @@
             font-weight: bold;
             margin-top: 15px;
             margin-bottom: 8px;
-            color: var(--primary-color);
+            color: var(--card-text);
             font-size: 1rem;
         }
 
@@ -292,6 +316,7 @@
             justify-content: space-between;
             gap: 10px;
             width: 100%;
+            color: var(--card-text);
         }
 
         .task-content {
@@ -304,9 +329,9 @@
         .deadline-badge {
             font-size: 0.75rem;
             font-weight: 600;
-            background-color: #fffaf0;
-            color: #dd6b20;
-            border: 1px solid #fbd38d;
+            background-color: rgba(0, 0, 220, 0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--kisk-yellow);
             padding: 2px 8px;
             border-radius: 12px;
             white-space: nowrap;
@@ -318,14 +343,15 @@
         input[type="checkbox"] {
             width: 16px;
             height: 16px;
-            accent-color: var(--accent-color);
+            accent-color: var(--kisk-blue);
             cursor: pointer;
             flex-shrink: 0;
         }
 
         input[type="checkbox"]:checked + span {
             text-decoration: line-through;
-            color: #a0aec0;
+            color: var(--text-muted);
+            opacity: 0.7;
         }
 
         input[type="checkbox"]:checked ~ .deadline-badge,
@@ -346,13 +372,14 @@
         }
 
         .schedule-grid li {
-            background: #fff;
-            border: 1px solid var(--border-color);
+            background: var(--white);
+            border: 1px solid var(--kisk-yellow);
             padding: 8px 10px;
             border-radius: 4px;
             font-size: 0.9rem;
             text-align: center;
             display: block;
+            color: var(--card-text);
         }
 
         @media (max-width: 850px) {
@@ -1529,8 +1556,8 @@
                 </ul>
                 <div class="section-title">✅ Podmínky pro splnění</div>
                 <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p31_t1" onchange="saveCheck('p31_t1')"><span>Semestrální projekt</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p31_t2" onchange="saveCheck('p31_t2')"><span>Závěrečná zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p31_t1" onchange="saveCheck('p31_t1')"><span>Rešeršní úkol</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p31_t2" onchange="saveCheck('p31_t2')"><span>Závěrečný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
                 </ul>
             </div>
 
@@ -1548,7 +1575,7 @@
                     <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
                 </div>
                 <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Architektura, vývoj, návrh a správa informačních systémů v organizacích a paměťových institucích.
+                    <b>📝 Stručný popis předmětu:</b> Architektura informačních systémů, databázové systémy a jejich správa v organizacích.
                 </div>
                 <div class="materials">
                     <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
@@ -1559,8 +1586,7 @@
                 </ul>
                 <div class="section-title">✅ Podmínky pro splnění</div>
                 <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p32_t1" onchange="saveCheck('p32_t1')"><span>Průběžné úkoly</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p32_t2" onchange="saveCheck('p32_t2')"><span>Závěrečný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p32_t1" onchange="saveCheck('p32_t1')"><span>Návrh databázového modelu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
                 </ul>
             </div>
 
@@ -1575,10 +1601,10 @@
                 <div class="info-grid">
                     <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
                     <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
-                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
                 </div>
                 <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Metodika a didaktika informačního vzdělávání, návrh výukových lekcí a rozvoj informační gramotnosti.
+                    <b>📝 Stručný popis předmětu:</b> Metodika výuky informační gramotnosti, tvorba lekcí a kurzů pro uživatele knihoven.
                 </div>
                 <div class="materials">
                     <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
@@ -1589,14 +1615,13 @@
                 </ul>
                 <div class="section-title">✅ Podmínky pro splnění</div>
                 <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p33_t1" onchange="saveCheck('p33_t1')"><span>Návrh výukové lekce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p33_t2" onchange="saveCheck('p33_t2')"><span>Ústní zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p33_t1" onchange="saveCheck('p33_t1')"><span>Výukový design lekce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
                 </ul>
             </div>
 
             <div id="predmet-iskb15" class="subject-card sem4">
                 <div class="subject-header">
-                    <h2 class="subject-title">Seminář k bakalářské práci: metodologie ISK</h2>
+                    <h2 class="subject-title">Seminář k bakalářské práci</h2>
                     <div class="subject-header-right">
                         <span class="subject-code">ISKB15</span>
                         <span class="subject-credits-tag">5 kr.</span>
@@ -1605,10 +1630,10 @@
                 <div class="info-grid">
                     <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
                     <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
-                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
                 </div>
                 <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Příprava a zpracování metodologického rámce pro bakalářskou práci, formulace výzkumných otázek a cílů.
+                    <b>📝 Stručný popis předmětu:</b> Příprava teze, struktury a metodologie bakalářské práce, konzultace s vedoucím.
                 </div>
                 <div class="materials">
                     <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
@@ -1619,8 +1644,7 @@
                 </ul>
                 <div class="section-title">✅ Podmínky pro splnění</div>
                 <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p34_t1" onchange="saveCheck('p34_t1')"><span>Projekt bakalářské práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p34_t2" onchange="saveCheck('p34_t2')"><span>Prezentace metodologie</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p34_t1" onchange="saveCheck('p34_t1')"><span>Schválené zadání a teze práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
                 </ul>
             </div>
 
@@ -1638,7 +1662,7 @@
                     <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
                 </div>
                 <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Základy referenčních služeb v knihovnách, vedení referenčního rozhovoru a práce s referenčními zdroji.
+                    <b>📝 Stručný popis předmětu:</b> Základy poskytování referenčních služeb, komunikace s uživatelem a správa dotazů.
                 </div>
                 <div class="materials">
                     <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
@@ -1649,7 +1673,7 @@
                 </ul>
                 <div class="section-title">✅ Podmínky pro splnění</div>
                 <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p35_t1" onchange="saveCheck('p35_t1')"><span>Praktické cvičení</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p35_t1" onchange="saveCheck('p35_t1')"><span>Zpracování cvičných rešerší</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
                 </ul>
             </div>
 
@@ -1667,7 +1691,7 @@
                     <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
                 </div>
                 <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Role a transformace médií v současné společnosti, mediální ekosystémy a dopady nových technologií.
+                    <b>📝 Stručný popis předmětu:</b> Transformace médií, nová média, sociální sítě a jejich vliv na žurnalistiku a společnost.
                 </div>
                 <div class="materials">
                     <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
@@ -1678,8 +1702,7 @@
                 </ul>
                 <div class="section-title">✅ Podmínky pro splnění</div>
                 <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p36_t1" onchange="saveCheck('p36_t1')"><span>Seminární esej</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p36_t2" onchange="saveCheck('p36_t2')"><span>Účast na kolokviu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p36_t1" onchange="saveCheck('p36_t1')"><span>Medialni analýza</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
                 </ul>
             </div>
 
@@ -1694,10 +1717,10 @@
                 <div class="info-grid">
                     <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
                     <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
-                    <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
                 </div>
                 <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Sledování a vyhodnocování návštěvnosti webových stránek, měření konverzí a analytické nástroje (např. Google Analytics).
+                    <b>📝 Stručný popis předmětu:</b> Měření návštěvnosti webů, vyhodnocování chování uživatelů, nástroje jako Google Analytics.
                 </div>
                 <div class="materials">
                     <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
@@ -1708,8 +1731,7 @@
                 </ul>
                 <div class="section-title">✅ Podmínky pro splnění</div>
                 <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p37_t1" onchange="saveCheck('p37_t1')"><span>Praktický analytický projekt</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p37_t2" onchange="saveCheck('p37_t2')"><span>Závěrečný test</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p37_t1" onchange="saveCheck('p37_t1')"><span>Analytický audit webu</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
                 </ul>
             </div>
 
@@ -1724,10 +1746,10 @@
                 <div class="info-grid">
                     <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
                     <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
-                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zkouška (zk)</div>
                 </div>
                 <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Sociologické, ekonomické a kulturní dimenze informační společnosti a globální sítě.
+                    <b>📝 Stručný popis předmětu:</b> Teoretické koncepty informační společnosti, globalizace, ekonomika založená na znalostech.
                 </div>
                 <div class="materials">
                     <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
@@ -1738,7 +1760,7 @@
                 </ul>
                 <div class="section-title">✅ Podmínky pro splnění</div>
                 <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p38_t1" onchange="saveCheck('p38_t1')"><span>Průběžná práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p38_t1" onchange="saveCheck('p38_t1')"><span>Závěrečná esej a zkouška</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
                 </ul>
             </div>
 
@@ -1756,7 +1778,7 @@
                     <div class="info-item"><strong>Ukončení:</strong> Kolokvium (k)</div>
                 </div>
                 <div class="description">
-                    <b>📝 Stručný popis předmětu:</b> Apokalyptické a eschatologické představy v náboženství a kultuře.
+                    <b>📝 Stručný popis předmětu:</b> Apokalyptické scénáře v historii, kultuře a moderní vědě.
                 </div>
                 <div class="materials">
                     <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
@@ -1767,7 +1789,157 @@
                 </ul>
                 <div class="section-title">✅ Podmínky pro splnění</div>
                 <ul>
-                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p39_t1" onchange="saveCheck('p39_t1')"><span>Seminární práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p39_t1" onchange="saveCheck('p39_t1')"><span>Reflektivní úkol</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <!-- ==================== 5. SEMESTR ==================== -->
+
+            <div id="predmet-iskb17" class="subject-card sem5">
+                <div class="subject-header">
+                    <h2 class="subject-title">Referenční a informační služby 2</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB17</span>
+                        <span class="subject-credits-tag">3 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vyplníte později</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Pokročilé referenční služby, správa digitálních knihoven a virtuálních referenčních pultů.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Bude upřesněno</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p40_t1" onchange="saveCheck('p40_t1')"><span>Projekt virtuální reference</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb18" class="subject-card sem5">
+                <div class="subject-header">
+                    <h2 class="subject-title">Příprava bakalářské práce I</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB18</span>
+                        <span class="subject-credits-tag">7 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vedoucí práce</div>
+                    <div class="info-item"><strong>Místnost:</strong> Individuální</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Samostatná rešerše literatury a sběr dat pro bakalářskou práci.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Individuální konzultace</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p41_t1" onchange="saveCheck('p41_t1')"><span>Odevzdání rešeršní části práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb19" class="subject-card sem5">
+                <div class="subject-header">
+                    <h2 class="subject-title">Odborná praxe</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB19</span>
+                        <span class="subject-credits-tag">4 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Garant praxí</div>
+                    <div class="info-item"><strong>Místnost:</strong> Vybraná instituce</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Odborná praxe v knihovně, informačním středisku nebo jiné paměťové instituci.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Dle domluvy v instituci</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p42_t1" onchange="saveCheck('p42_t1')"><span>Absolvování praxe a potvrzení</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p42_t2" onchange="saveCheck('p42_t2')"><span>Závěrečná reflexe praxe</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <!-- ==================== 6. SEMESTR ==================== -->
+
+            <div id="predmet-iskb20" class="subject-card sem6">
+                <div class="subject-header">
+                    <h2 class="subject-title">Příprava bakalářské práce II</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB20</span>
+                        <span class="subject-credits-tag">14 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Vedoucí práce</div>
+                    <div class="info-item"><strong>Místnost:</strong> Individuální</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Zápočet (z)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Dokončení textu bakalářské práce, odevzdání a příprava k obhajobě.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Odkaz na studijní materiály v IS
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Individuální konzultace</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p43_t1" onchange="saveCheck('p43_t1')"><span>Odevzdání hotové bakalářské práce</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
+                </ul>
+            </div>
+
+            <div id="predmet-iskb21" class="subject-card sem6">
+                <div class="subject-header">
+                    <h2 class="subject-title">Bakalářská zkouška</h2>
+                    <div class="subject-header-right">
+                        <span class="subject-code">ISKB21</span>
+                        <span class="subject-credits-tag">0 kr.</span>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><strong>Vyučující:</strong> Státní zkušební komise</div>
+                    <div class="info-item"><strong>Místnost:</strong> Budova FF MU</div>
+                    <div class="info-item"><strong>Ukončení:</strong> Státní závěrečná zkouška (szk)</div>
+                </div>
+                <div class="description">
+                    <b>📝 Stručný popis předmětu:</b> Obhajoba bakalářské práce a ústní zkouška z okruhů informačních studií a knihovnictví.
+                </div>
+                <div class="materials">
+                    <b>📚 Studijní materiály:</b> Okruhy k SZZ v IS MU
+                </div>
+                <div class="section-title">📅 Rozvrh výuky:</div>
+                <ul class="schedule-grid">
+                    <li>Dle harmonogramu fakulty</li>
+                </ul>
+                <div class="section-title">✅ Podmínky pro splnění</div>
+                <ul>
+                    <li><label class="task-label"><div class="task-content"><input type="checkbox" id="p44_t1" onchange="saveCheck('p44_t1')"><span>Úspěšná obhajoba a státnice</span></div><span class="deadline-badge">⏰ XX. XX. XXXX</span></label></li>
                 </ul>
             </div>
 
@@ -1778,52 +1950,80 @@
 <script>
     function toggleSemester(semId) {
         const group = document.getElementById('group-' + semId);
-        const btn = group.querySelector('.sem-btn');
-        group.classList.toggle('open');
-        btn.classList.toggle('active');
-    }
+        const isOpen = group.classList.contains('open');
+        
+        // Zavřít všechny skupiny
+        document.querySelectorAll('.semester-group').forEach(g => {
+            g.classList.remove('open');
+        });
+        document.querySelectorAll('.sem-btn').forEach(b => {
+            b.classList.remove('active');
+        });
 
-    function checkSubjectCompletion(card) {
-        if (!card) return;
-        const checkboxes = card.querySelectorAll('input[type="checkbox"]');
-        const subjectId = card.id;
-        const navLink = document.querySelector(`.subject-nav-link[data-target="${subjectId}"]`);
-
-        if (checkboxes.length === 0) return;
-
-        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-
-        if (allChecked) {
-            card.classList.add('completed');
-            if (navLink) navLink.classList.add('completed');
-        } else {
-            card.classList.remove('completed');
-            if (navLink) navLink.classList.remove('completed');
+        // Pokud nebyla otevřená, otevřít ji
+        if (!isOpen) {
+            group.classList.add('open');
+            group.querySelector('.sem-btn').classList.add('active');
         }
     }
 
     function saveCheck(id) {
         const checkbox = document.getElementById(id);
-        localStorage.setItem(id, checkbox.checked);
-        const card = checkbox.closest('.subject-card');
-        checkSubjectCompletion(card);
+        const isChecked = checkbox.checked;
+        localStorage.setItem(id, isChecked);
+        
+        // Zkontrolovat stav celé karty
+        updateCardStatus(checkbox);
     }
 
-    function loadChecks() {
+    function updateCardStatus(checkbox) {
+        const card = checkbox.closest('.subject-card');
+        if (!card) return;
+        
+        const checkboxes = card.querySelectorAll('input[type="checkbox"]');
+        const allChecked = Array.from(checkboxes.length ? checkboxes : []).every(cb => cb.checked);
+        
+        if (allChecked && checkboxes.length > 0) {
+            card.classList.add('completed');
+            // Zvýraznit i v sidebar navigačním menu
+            const cardId = card.id;
+            const navLink = document.querySelector(`.subject-nav-link[data-target="${cardId}"]`);
+            if (navLink) navLink.classList.add('completed');
+        } else {
+            card.classList.remove('completed');
+            const cardId = card.id;
+            const navLink = document.querySelector(`.subject-nav-link[data-target="${cardId}"]`);
+            if (navLink) navLink.classList.remove('completed');
+        }
+    }
+
+    // Načtení uloženého stavu po načtení stránky
+    document.addEventListener('DOMContentLoaded', () => {
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(cb => {
-            const saved = localStorage.getItem(cb.id);
-            if (saved !== null) {
-                cb.checked = saved === 'true';
+            const savedState = localStorage.getItem(cb.id);
+            if (savedState === 'true') {
+                cb.checked = true;
+                updateCardStatus(cb);
             }
         });
 
-        const cards = document.querySelectorAll('.subject-card');
-        cards.forEach(card => checkSubjectCompletion(card));
-    }
-
-    window.onload = loadChecks;
+        // Přidání posluchačů pro kliknutí na navigaci v sidebaru (pro hladký posun)
+        document.querySelectorAll('.subject-nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Zachováme výchozí chování (kotvu), ale zajistíme aktivní semestr
+                const targetId = this.getAttribute('data-target');
+                const targetCard = document.getElementById(targetId);
+                if (targetCard) {
+                    // Najít semestr patřící ke kartě
+                    const semClass = Array.from(targetCard.classList).find(c => c.startsWith('sem'));
+                    if (semClass) {
+                        toggleSemester(semClass);
+                    }
+                }
+            });
+        });
+    });
 </script>
-
 </body>
 </html>
