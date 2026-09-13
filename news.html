@@ -43,18 +43,31 @@
                 container.appendChild(section);
 
                 try {
-                    // Pomocí veřejné služby převádíme RSS feed na formát, se kterým umí web pracovat
-                    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`);
+                    // Použijeme CORS proxy AllOrigins k obcházení blokování a CORS
+                    const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(feed.url)}`);
                     const data = await res.json();
 
-                    if (data.status === 'ok') {
-                        let html = '<ul>';
-                        data.items.slice(0, 5).forEach(item => {
-                            const date = new Date(item.pubDate).toLocaleDateString('cs-CZ');
-                            html += `<li><a href="${item.link}" target="_blank">${item.title}</a><span class="date">${date}</span></li>`;
-                        });
-                        html += '</ul>';
-                        section.innerHTML = `<h2 class="feed-title">${feed.name}</h2>${html}`;
+                    if (data.contents) {
+                        // Převod načteného XML textu na zpracovatelný DOM dokument
+                        const parser = new DOMParser();
+                        const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+                        const items = xmlDoc.querySelectorAll("item");
+
+                        if (items.length > 0) {
+                            let html = '<ul>';
+                            Array.from(items).slice(0, 5).forEach(item => {
+                                const title = item.querySelector("title")?.textContent || "Bez názvu";
+                                const link = item.querySelector("link")?.textContent || "#";
+                                const pubDateRaw = item.querySelector("pubDate")?.textContent;
+                                const date = pubDateRaw ? new Date(pubDateRaw).toLocaleDateString('cs-CZ') : '';
+
+                                html += `<li><a href="${link}" target="_blank">${title}</a><span class="date">${date}</span></li>`;
+                            });
+                            html += '</ul>';
+                            section.innerHTML = `<h2 class="feed-title">${feed.name}</h2>${html}`;
+                        } else {
+                            section.innerHTML = `<h2 class="feed-title">${feed.name}</h2><p>Ve feedu nebyly nalezeny žádné články.</p>`;
+                        }
                     } else {
                         section.innerHTML = `<h2 class="feed-title">${feed.name}</h2><p>Chyba při načítání feedu.</p>`;
                     }
