@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Můj Přehled Zpráv</title>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f4f4f9; color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        .feed-section { background: white; margin-bottom: 25px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .feed-title { color: #2c3e50; margin-top: 0; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 12px; }
+        a { color: #0066cc; text-decoration: none; font-weight: 500; }
+        a:hover { text-decoration: underline; }
+        .date { color: #888; font-size: 0.85em; margin-left: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Můj Přehled Zpráv</h1>
+    <div id="content">Načítám články...</div>
+
+    <script>
+        // Sem vložte přímé adresy RSS feedů vašich 6 webů
+        const feeds = [
+            { name: "Manipulátoři.cz", url: "https://manipulatori.cz/feed/" },
+            // Sem přidejte zbývajících 5 feedů ve stejném tvaru:
+            // { name: "Název", url: "https://example.com/feed/" },
+        ];
+
+        async function loadFeeds() {
+            const container = document.getElementById('content');
+            container.innerHTML = '';
+
+            for (const feed of feeds) {
+                const section = document.createElement('div');
+                section.className = 'feed-section';
+                section.innerHTML = `<h2 class="feed-title">${feed.name}</h2><p>Načítání...</p>`;
+                container.appendChild(section);
+
+                try {
+                    // Použití rss2json API pro převod RSS/XML do JSONu přímo v prohlížeči
+                    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`);
+                    const data = await res.json();
+
+                    if (data.status === 'ok') {
+                        let html = '<ul>';
+                        // Zobrazí prvních 5 nejnovějších článků z každého webu
+                        data.items.slice(0, 5).forEach(item => {
+                            const date = new Date(item.pubDate).toLocaleDateString('cs-CZ');
+                            html += `<li><a href="${item.link}" target="_blank">${item.title}</a><span class="date">${date}</span></li>`;
+                        });
+                        html += '</ul>';
+                        section.innerHTML = `<h2 class="feed-title">${feed.name}</h2>${html}`;
+                    } else {
+                        section.innerHTML = `<h2 class="feed-title">${feed.name}</h2><p>Chyba při načítání feedu.</p>`;
+                    }
+                } catch (e) {
+                    section.innerHTML = `<h2 class="feed-title">${feed.name}</h2><p>Feeds se nepodařilo načíst.</p>`;
+                }
+            }
+        }
+
+        loadFeeds();
+    </script>
+</body>
+</html>
