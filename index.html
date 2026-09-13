@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studijní Portál</title>
+    <title>Studijní Portál - KISK</title>
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-            --text-muted: #666666;
+            --kisk-blue: #0000dc;     /* Sytá modrá pro hlavní pozadí */
+            --kisk-yellow: #f4d371;   /* Žlutá barva pro rámečky */
+            --card-light-bg: #eef2ff; /* Světle modré pozadí karet */
+            --card-text: #0000dc;     /* Modrý text uvnitř karet */
+            --text-muted: #3b3bc4;    /* Tmavší odstín modré pro doplňkový text v kartách */
+            --white: #ffffff;
         }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--kisk-blue);
+            color: var(--white);
             margin: 0;
             padding: 40px 20px;
             display: flex;
@@ -34,17 +34,23 @@
 
         header {
             margin-bottom: 40px;
+            border: 2px solid var(--kisk-yellow);
+            border-radius: 16px;
+            padding: 30px 20px;
+            background: rgba(0, 0, 220, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
         h1 {
-            color: var(--primary-color);
+            color: var(--kisk-yellow);
             font-size: 2.2rem;
             margin-bottom: 8px;
+            font-weight: 700;
         }
 
         .subtitle {
-            color: var(--text-muted);
-            font-size: 1.2rem;
+            color: var(--white);
+            font-size: 1.1rem;
             font-weight: 400;
             margin-top: 0;
         }
@@ -57,23 +63,23 @@
         }
 
         .card {
-            background: var(--card-bg);
-            border-radius: 12px;
+            background: var(--card-light-bg);
+            border-radius: 14px;
             padding: 30px 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
             text-decoration: none;
-            color: inherit;
+            color: var(--card-text);
             display: flex;
             flex-direction: column;
             align-items: center;
-            border: 1px solid #e1e8ed;
+            border: 5px solid var(--kisk-yellow);
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            border-color: var(--accent-color);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+            background: #ffffff;
         }
 
         .card-icon {
@@ -84,7 +90,7 @@
         .card-title {
             font-size: 1.4rem;
             font-weight: 600;
-            color: var(--primary-color);
+            color: var(--card-text);
             margin-bottom: 10px;
         }
 
@@ -99,10 +105,8 @@
 
     <div class="container">
         <header>
-            <!-- Nahraďte názvem vaší univerzity -->
             <h1>Masarykova univerzita</h1> 
-            <!-- Nahraďte názvem vašeho oboru -->
-            <p class="subtitle">Studijní obor: FF B-ISK_ Informační studia a knihovnictví, bakalářský studijní program</p> 
+            <p class="subtitle">FF: KISK – Informační studia a knihovnictví</p> 
         </header>
 
         <main class="grid">
@@ -114,7 +118,6 @@
             </a>
 
             <!-- Karta 2: RSS Novinky -->
-            <!-- Pokud jste soubor pojmenovala jinak než zpravy.html, upravte název v href="" -->
             <a href="news.html" class="card">
                 <div class="card-icon">📰</div>
                 <div class="card-title">Novinky</div>
